@@ -1,0 +1,114 @@
+token_type {
+   header {
+$$<std-lib>--------------------------------------------------------------------
+#include <string>
+$$-----------------------------------------------------------------------------
+#include <$$QUEX_LIB_DIR$$/types.h>
+#include <$$QUEX_LIB_DIR$$/MemoryManager>
+
+#include <$$QUEX_LIB_DIR$$/asserts>
+#include <$$OUTPUT_DIR$$/lib/lexeme/basics>
+#include <$$OUTPUT_DIR$$/lib/lexeme/converter-from-lexeme>
+
+QUEX_NAMESPACE_MAIN_OPEN
+
+extern QUEX_TYPE_LEXATOM QUEX_NAME(LexemeNull);
+extern const char*       QUEX_NAME(map_token_id_to_name)(const QUEX_TYPE_TOKEN_ID);
+
+QUEX_NAMESPACE_MAIN_CLOSE
+
+   }
+   standard {
+        id       : uint32_t;
+        line_n   : size_t;
+        column_n : size_t;
+   }
+   distinct {
+       text   :  const QUEX_TYPE_LEXATOM*;
+       number :  size_t;
+   }
+
+   inheritable;
+
+   constructor {
+       self.number = 0;
+       self.text   = LexemeNull;
+   }
+
+   repetition_n = number;
+
+   destructor {
+       if( self.text != LexemeNull ) {
+           QUEX_GNAME_LIB(MemoryManager_free)((void*)self.text,
+                                      E_MemoryObjectType_TEXT);
+           self.text = LexemeNull;
+       }
+   }
+
+   copy {
+        self.id  = Other.id;
+
+        if( self.text != LexemeNull ) {
+            QUEX_GNAME_LIB(MemoryManager_free)((void*)self.text, E_MemoryObjectType_TEXT);
+        }
+        if( Other.text != LexemeNull ) {
+            self.text = QUEX_GNAME(lexeme_clone)(self.text, 
+                                                QUEX_GNAME(lexeme_length)(Other.text));
+            if( ! self.text ) self.text = LexemeNull;
+        }
+        self.number = Other.number;
+
+        $$<token-stamp-line>   self.line_n   = Other.line_n;$$
+        $$<token-stamp-column> self.column_n = Other.column_n;$$
+   }
+
+   take_text {
+        if( self.text != LexemeNull ) {
+            QUEX_GNAME_LIB(MemoryManager_free)((void*)self.text, E_MemoryObjectType_TEXT);
+        }
+        if( Begin != LexemeNull ) {
+            __quex_assert(End >= Begin);
+            self.text = QUEX_GNAME(lexeme_clone)(Begin, (size_t)(End - Begin));
+            if( ! self.text ) self.text = LexemeNull;
+            *((QUEX_TYPE_LEXATOM*)(self.text + (End - Begin))) = (QUEX_TYPE_LEXATOM)0;
+        } else {
+            self.text = LexemeNull;
+        }
+   }
+
+   body {
+$$<std-lib>--------------------------------------------------------------------
+        operator 
+        const std::string() const
+        { return std::string(get_string()); }
+
+        const std::string   get_string() const 
+        {
+            std::string  tmp(QUEX_GNAME(map_token_id_to_name)(self.id));
+            tmp += " '" + QUEX_GNAME(lexeme_to_pretty_char)(self.text) + "'";
+            return tmp;
+        }
+$$-----------------------------------------------------------------------------
+        const char*        id_name() const
+        { return QUEX_GNAME(map_token_id_to_name)(id); }
+   }
+
+   footer {
+
+$$<token-class-only>-----------------------------------------------------------
+inline const char* QUEX_GNAME(map_token_id_to_name)(QUEX_TYPE_TOKEN_ID Id)
+{ (void)Id; return "<token ids unknown at class generation time>"; }
+$$-----------------------------------------------------------------------------
+
+$$<std-lib>--------------------------------------------------------------------
+$$NAMESPACE_OPEN$$
+inline std::ostream&
+operator<<(std::ostream& ostr, const $$TOKEN_CLASS$$& Tok)
+{ ostr << Tok.get_string(); return ostr; }
+$$NAMESPACE_CLOSE$$
+$$-----------------------------------------------------------------------------
+
+#include <$$OUTPUT_DIR$$/lib/lexeme/basics.i>
+   }
+}
+

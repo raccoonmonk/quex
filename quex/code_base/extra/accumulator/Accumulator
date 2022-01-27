@@ -1,0 +1,119 @@
+/* -*- C++ -*-  vim:set syntax=cpp: 
+ *
+ * (C) 2004-2009 Frank-Rene Schaefer
+ *
+ * QUEX_INCLUDE_GUARD__ANALYZER__ACCUMULATOR may be undefined in case
+ *    that multiple lexical analyzers are used. Then, the name of the
+ *    QUEX_NAME(Accumulator) must be different.                               */
+#ifndef QUEX_INCLUDE_GUARD__EXTRA__ACCUMULATOR__ACCUMULATOR
+#define QUEX_INCLUDE_GUARD__EXTRA__ACCUMULATOR__ACCUMULATOR
+
+/* Initial size of memory to hold accumulated text.                           */
+#if   defined(QUEX_<PURE>SETTING_ACCUMULATOR_INITIAL_SIZE_EXT)
+#   define QUEX_SETTING_ACCUMULATOR_INITIAL_SIZE QUEX_<PURE>SETTING_ACCUMULATOR_INITIAL_SIZE_EXT
+#elif defined(QUEX_SETTING_ACCUMULATOR_INITIAL_SIZE_EXT)
+#   define QUEX_SETTING_ACCUMULATOR_INITIAL_SIZE QUEX_SETTING_ACCUMULATOR_INITIAL_SIZE_EXT
+#else
+#   define QUEX_SETTING_ACCUMULATOR_INITIAL_SIZE 256
+#endif
+
+/* Granularity of memory allocation:
+ * Upon overload: new memory's size = current memory's size * (1 + factor)    */
+#if   defined(QUEX_<PURE>SETTING_ACCUMULATOR_GRANULARITY_FACTOR_EXT)
+#   define QUEX_SETTING_ACCUMULATOR_GRANULARITY_FACTOR QUEX_<PURE>SETTING_ACCUMULATOR_GRANULARITY_FACTOR_EXT
+#elif defined(QUEX_SETTING_ACCUMULATOR_GRANULARITY_FACTOR_EXT)
+#   define QUEX_SETTING_ACCUMULATOR_GRANULARITY_FACTOR QUEX_SETTING_ACCUMULATOR_GRANULARITY_FACTOR_EXT
+#else
+#   define QUEX_SETTING_ACCUMULATOR_GRANULARITY_FACTOR 0.8
+#endif
+
+$$INC: definitions$$
+
+QUEX_NAMESPACE_MAIN_OPEN
+
+$$<C>--------------------------------------------------------------------------
+QUEX_TYPE0_ANALYZER;   
+typedef struct QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT QUEX_NAME(Accumulator_tag) {
+$$-----------------------------------------------------------------------------
+$$<Cpp>--------------------------------------------------------------------------
+class QUEX_TYPE0_ANALYZER;
+class QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT QUEX_NAME(Accumulator) {
+public:
+$$-----------------------------------------------------------------------------
+    $$<count-line>   size_t  _begin_line;$$
+    $$<count-column> size_t  _begin_column;$$
+
+    struct { 
+        QUEX_TYPE_LEXATOM* begin;
+        QUEX_TYPE_LEXATOM* end;
+        QUEX_TYPE_LEXATOM* memory_end;
+    }                   text;
+    QUEX_TYPE_ANALYZER* the_lexer;     
+
+$$<Cpp>------------------------------------------------------------------------
+    QUEX_NAME(Accumulator)();
+    ~QUEX_NAME(Accumulator)();
+
+    void   clear();
+    void   add(const QUEX_TYPE_LEXATOM* Begin, 
+               const QUEX_TYPE_LEXATOM* End);
+    void   add_character(const QUEX_TYPE_LEXATOM Character);
+    bool   extend(size_t MinAddSize);
+    bool   flush(QUEX_TYPE_TOKEN_ID);
+    void   print_this();
+$$-----------------------------------------------------------------------------
+$$<C>--------------------------------------------------------------------------
+    void   (*destruct)(struct QUEX_NAME(Accumulator_tag)* me);
+    void   (*clear)(struct QUEX_NAME(Accumulator_tag)* me);
+    void   (*add)(struct QUEX_NAME(Accumulator_tag)*  me,
+                  const QUEX_TYPE_LEXATOM*            Begin, 
+                  const QUEX_TYPE_LEXATOM*            End);
+    void   (*add_character)(struct QUEX_NAME(Accumulator_tag)* me,
+                            const QUEX_TYPE_LEXATOM            Character);
+
+    bool   (*extend)(struct QUEX_NAME(Accumulator_tag)* me, 
+                     size_t                             MinAddSize);
+    bool   (*flush)(struct QUEX_NAME(Accumulator_tag)* me, 
+                    QUEX_TYPE_TOKEN_ID                 TokenID);
+    void   (*print_this)(struct QUEX_NAME(Accumulator_tag)* me);
+$$-----------------------------------------------------------------------------
+}$$<C> QUEX_NAME(Accumulator)$$;
+
+QUEX_INLINE bool
+QUEX_NAME(Accumulator_construct)(QUEX_NAME(Accumulator)*, QUEX_TYPE_ANALYZER*);
+
+QUEX_INLINE void
+QUEX_NAME(Accumulator_destruct)(QUEX_NAME(Accumulator)* me);
+                      
+QUEX_INLINE void      
+QUEX_NAME(Accumulator__clear)(QUEX_NAME(Accumulator)* me);
+                      
+QUEX_INLINE void      
+QUEX_NAME(Accumulator__add)(QUEX_NAME(Accumulator)*  me,
+                            const QUEX_TYPE_LEXATOM* Begin, 
+                            const QUEX_TYPE_LEXATOM* End);
+                      
+QUEX_INLINE void      
+QUEX_NAME(Accumulator__add_character)(QUEX_NAME(Accumulator)*  me,
+                                      const QUEX_TYPE_LEXATOM  Character);
+
+QUEX_INLINE bool
+QUEX_NAME(Accumulator__flush)(QUEX_NAME(Accumulator)*   me,
+                              const QUEX_TYPE_TOKEN_ID  TokenID);
+                      
+QUEX_INLINE void
+QUEX_NAME(Accumulator_resources_absent_mark)(QUEX_NAME(Accumulator)* me);
+
+QUEX_INLINE bool
+QUEX_NAME(Accumulator_resources_absent)(QUEX_NAME(Accumulator)* me);
+
+QUEX_INLINE bool
+QUEX_NAME(Accumulator_init_memory)(QUEX_NAME(Accumulator)*   me);
+
+QUEX_INLINE void      
+QUEX_NAME(Accumulator_print_this)(QUEX_NAME(Accumulator)* me);
+                      
+
+QUEX_NAMESPACE_MAIN_CLOSE
+
+#endif /*  QUEX_INCLUDE_GUARD__EXTRA__ACCUMULATOR__ACCUMULATOR */

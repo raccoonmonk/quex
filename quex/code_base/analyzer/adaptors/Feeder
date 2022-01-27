@@ -1,0 +1,55 @@
+/* -*- C++ -*-   vim:set syntax=cpp:
+ * 
+ * PURPOSE: A 'feeder' coordinates the lexical analysis based on input that
+ *          is *NOT* delivered through a byte loader in the background. 
+ *
+ * See file 'Feeder.i' for detailed descriptions.
+ *
+ * (C) 2016 Frank-Rene Schaefer.                                             */
+#ifndef QUEX_INCLUDE_GUARD__ANALYZER__ADAPTORS__FEEDER
+#define QUEX_INCLUDE_GUARD__ANALYZER__ADAPTORS__FEEDER
+
+QUEX_NAMESPACE_MAIN_OPEN
+
+typedef struct {
+    QUEX_TYPE_ANALYZER* lexer;
+    QUEX_TYPE_LEXATOM*  last_incomplete_lexeme_p;
+    QUEX_TYPE_TOKEN_ID  stream_terminating_token_id;
+} QUEX_NAME(FeederBase);
+
+$$<Cpp> struct QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT QUEX_NAME(Feeder) {$$
+$$<C>   typedef struct QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT QUEX_NAME(Feeder_tag) {$$
+    QUEX_NAME(FeederBase)  base;
+
+    struct {
+        const void* begin_p;
+        const void* end_p;
+    } external_chunk;
+
+    QUEX_TYPE_TOKEN_ID  stream_terminating_token_id;
+
+$$<Cpp>------------------------------------------------------------------------
+public:
+    QUEX_NAME(Feeder)(QUEX_TYPE_ANALYZER*, QUEX_TYPE_TOKEN_ID);
+    void             feed(const void* BeginP, const void* EndP);
+    QUEX_TYPE_TOKEN* deliver();
+};
+$$-----------------------------------------------------------------------------
+$$<C>--------------------------------------------------------------------------
+    void             (*feed)(struct QUEX_NAME(Feeder_tag)*, 
+                             const void* BeginP, const void* EndP);
+    QUEX_TYPE_TOKEN* (*deliver)(struct QUEX_NAME(Feeder_tag)*);
+} QUEX_NAME(Feeder);
+$$-----------------------------------------------------------------------------
+
+QUEX_INLINE void             QUEX_NAME(Feeder_construct)(QUEX_NAME(Feeder)*   me, 
+                                                         QUEX_TYPE_ANALYZER* lexer,
+                                                         QUEX_TYPE_TOKEN_ID  StreamTerminatingTokenId);
+QUEX_INLINE QUEX_TYPE_TOKEN* QUEX_NAME(Feeder_deliver)(QUEX_NAME(Feeder)* me);
+QUEX_INLINE void             QUEX_NAME(Feeder_feed)(QUEX_NAME(Feeder)* me,
+                                                    const void* BeginP, 
+                                                    const void* EndP);
+
+QUEX_NAMESPACE_MAIN_CLOSE
+
+#endif /* QUEX_INCLUDE_GUARD__ANALYZER__ADAPTORS__FEEDER */

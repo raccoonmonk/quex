@@ -1,0 +1,35 @@
+
+                (0)---->(1)---.
+                         |    |
+                         '-<--'
+    
+(0) Accept MATCH_FAILURE
+(1) Store InputP 77
+(1) Accept 111/1
+
+Unresolved Mouth States:
+   [1L]
+
+Linear States:
+  00     Accepter:
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: 0
+     
+Mouth States (Resolved):
+Mouth States (Unresolved):
+
+ * 01
+
+  from  0 
+         Accepter:
+           pre111 => 1
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -1
+           [1] offset: 0
+           [77] offset: 0
+     
+  from  1 <void>
+
+Horizon: [1L]

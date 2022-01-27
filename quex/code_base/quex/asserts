@@ -1,0 +1,50 @@
+/* vim: set syntax=cpp: */
+#ifndef QUEX_INCLUDE_GUARD__QUEX__ASSERTS
+#define QUEX_INCLUDE_GUARD__QUEX__ASSERTS
+
+#if 0
+#if    ! defined(QUEX_INDICATE_CONFIGURATION_FILE_PASSED) \
+    && ! defined(QUEX_OPTION_ASSERTS)
+#   error "Asserts included before configuration file. However, configuration file CONTROLS asserts!"
+#endif
+#endif
+
+$$<not-std-lib>------------------------------------------------------------------
+/* No std-lib, no assertions.                                                 */
+#ifdef    QUEX_OPTION_ASSERTS
+#   undef QUEX_OPTION_ASSERTS
+#endif
+$$-------------------------------------------------------------------------------
+
+#ifdef QUEX_OPTION_ASSERTS
+$$<Cpp>--------------------------------------------------------------------------
+/*  Hint, in case of compile error: 
+ *  Has code base been generated with '--language C'?                         */
+#   include <cassert> 
+#   ifndef  __quex_assert_no_passage
+#   define  __quex_assert_no_passage()    do { self.error_code_set_if_first(E_Error_DFA_DropIntoOtherState); return; } while ( 0 )
+#   endif
+$$-----------------------------------------------------------------------------
+$$<C>--------------------------------------------------------------------------
+#   include <assert.h>
+#   ifndef  __quex_assert_no_passage
+#   define  __quex_assert_no_passage()    do { self.error_code_set_if_first(&self, E_Error_DFA_DropIntoOtherState); return; } while ( 0 )
+#   endif
+$$-----------------------------------------------------------------------------
+#   define  __quex_assert(X)              assert(X)
+#   define  QUEX_IF_ASSERTS_poison(BEGIN, END) \
+            do { \
+                if( END > BEGIN )  \
+                QUEX_GSTD(memset)((uint8_t*)(BEGIN), (uint8_t)0xFF, \
+                                  (size_t)((const uint8_t*)END - (const uint8_t*)BEGIN)); \
+            } while(0)
+#else
+#   define  __quex_assert(X)                   /* no assert */
+#   define  __quex_assert_no_passage()         /* no assert */
+#   define  QUEX_IF_ASSERTS_poison(BEGIN, END) /* empty */
+#endif
+
+#define __QUEX_INCLUDE_INDICATOR__ASSERTS
+
+#endif /* QUEX_INCLUDE_GUARD__QUEX__ASSERTS */
+

@@ -1,0 +1,34 @@
+           
+                .--<-------(5)---<------.
+                |                       |
+               (0)---->(1)---->(2)---->(3)---->(4)
+                        |       |   
+                        '---<---'
+    
+(0) Accept MATCH_FAILURE
+(1) Store InputP 77
+(1) Accept 111/1
+(3) Accept 333/33
+(4) Accept 44
+
+Unresolved Mouth States:
+   [0L, 1L]
+
+Linear States:
+  02 <void>
+  03 <void>
+  04 <void>
+  05 <void>
+Mouth States (Resolved):
+Mouth States (Unresolved):
+
+ * 00
+
+  from  5 <void>
+
+ * 01
+
+  from  0 <void>
+  from  2 <void>
+
+Horizon: []

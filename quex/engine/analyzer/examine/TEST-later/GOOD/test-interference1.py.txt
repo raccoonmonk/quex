@@ -1,0 +1,61 @@
+Mouth States:
+[1]
+##Common Acceptance Scheme:
+##      RESTORE_ACCEPTANCE
+##
+##Input Pointer Offset Schemes:
+
+##Snapshot Map Schemes:
+
+Output Recipe:
+      Accepter:
+           RESTORE_ACCEPTANCE
+         InputOffsetDb:
+     
+--------------------------------------------------------------------
+[2]
+##Common Acceptance Scheme:
+##      1111
+##
+##Input Pointer Offset Schemes:
+
+##Snapshot Map Schemes:
+
+Output Recipe:
+      Accepter:
+           1111
+         InputOffsetDb:
+     
+--------------------------------------------------------------------
+[3]
+##Common Acceptance Scheme:
+##      2222
+##
+##Input Pointer Offset Schemes:
+
+##Snapshot Map Schemes:
+
+Output Recipe:
+      Accepter:
+           2222
+         InputOffsetDb:
+     
+--------------------------------------------------------------------
+[4]
+##Common Acceptance Scheme:
+##      pre33 => 3333
+##      pre44 => 4444
+##      5555
+##
+##Input Pointer Offset Schemes:
+
+##Snapshot Map Schemes:
+
+Output Recipe:
+      Accepter:
+           pre33 => 3333
+           pre44 => 4444
+           5555
+         InputOffsetDb:
+     
+--------------------------------------------------------------------

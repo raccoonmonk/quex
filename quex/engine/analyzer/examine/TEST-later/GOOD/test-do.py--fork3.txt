@@ -1,0 +1,88 @@
+           
+                          .->--(2)-->--(5)
+                         /              
+               (0)---->(1)---->(3)---->(6)
+                         \              
+                          '->--(4)-->--(7)
+    
+(0) Accept MATCH_FAILURE
+(1) Store InputP 77
+(1) Accept 111/1
+(3) Accept 333/33
+(4) Accept 44
+(6) Accept 666/66
+(7) Accept 77R
+
+Unresolved Mouth States:
+   []
+
+Linear States:
+  00     Accepter:
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: 0
+     
+  01     Accepter:
+           pre111 => 1
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -1
+           [1] offset: 0
+           [77] offset: 0
+     
+  02     Accepter:
+           pre111 => 1
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -2
+           [1] offset: -1
+           [77] offset: -1
+     
+  03     Accepter:
+           pre333 => 33
+           pre111 => 1
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -2
+           [1] offset: -1
+           [33] offset: 0
+           [77] offset: -1
+     
+  04     Accepter:
+           44
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: 0
+           [1] offset: -1
+           [77] offset: -1
+     
+  05     Accepter:
+           pre111 => 1
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -3
+           [1] offset: -2
+           [77] offset: -2
+     
+  06     Accepter:
+           pre666 => 66
+           pre333 => 33
+           pre111 => 1
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -3
+           [1] offset: -2
+           [33] offset: -1
+           [66] offset: 0
+           [77] offset: -2
+     
+  07     Accepter:
+           77
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -1
+           [1] offset: -2
+           [77] offset: -2
+     
+Mouth States (Resolved):
+Mouth States (Unresolved):
+
+Horizon: []

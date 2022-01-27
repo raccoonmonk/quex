@@ -1,0 +1,28 @@
+/*  -*- C++ -*-  vim: set syntax=cpp: */
+/* (C) 2008 Frank-Rene Schaefer*/
+#ifndef  QUEX_INCLUDE_GUARD__BUFFER__LEXATOMS__LEXATOM_LOADER_PLAIN
+#define  QUEX_INCLUDE_GUARD__BUFFER__LEXATOMS__LEXATOM_LOADER_PLAIN
+/**/
+
+$$<Cpp && std-lib>-------------------------------------------------------------
+#include <cerrno>
+#include <stdexcept>
+$$-----------------------------------------------------------------------------
+
+$$INC: definitions$$
+$$INC: buffer/Buffer$$
+$$INC: buffer/lexatoms/LexatomLoader$$
+$$INC: quex/byte_loader/ByteLoader$$
+
+QUEX_NAMESPACE_MAIN_OPEN
+
+typedef struct QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT QUEX_NAME(LexatomLoader_Plain_tag) {
+    QUEX_NAME(LexatomLoader)     base;
+} QUEX_NAME(LexatomLoader_Plain);
+
+QUEX_INLINE QUEX_NAME(LexatomLoader)*
+QUEX_NAME(LexatomLoader_Plain_new)(QUEX_GNAME_LIB(ByteLoader)* byte_loader);
+
+QUEX_NAMESPACE_MAIN_CLOSE
+
+#endif /* __INCLUDE_GUARD__QUEX_BUFFER_INPUT_STRATEGY_PLAIN__ */

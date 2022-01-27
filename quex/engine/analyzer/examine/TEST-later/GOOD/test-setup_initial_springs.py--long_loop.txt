@@ -1,0 +1,17 @@
+Spring: 0;
+Recipe: {
+    Accepter:
+      MATCH_FAILURE
+    InputOffsetDb:
+      [CONTEXT_FREE_MATCH] offset: 0
+
+}
+Linear States:
+   01: determined: False
+   02: determined: False
+   03: determined: False
+   04: determined: False
+   05: determined: False
+Mouth States:
+   00: determined: True
+   06: determined: False

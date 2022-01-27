@@ -1,0 +1,116 @@
+/* vim: set ft=c: 
+ *
+ * ByteLoader: Loading bytes into a buffer from some arbitrary source.
+ *
+ * The 'ByteLoader' is the interface class that defines the API to load bytes
+ * into a buffer. The bytes at this point are not interpreted or related to 
+ * 'lexatoms'. All processes provided input must be derived from this class.
+ *
+ * Examples:
+ *
+ *     'ByteLoader_FILE' loads content from a Standard C-lib FILE.
+ *     'ByteLoader_stream' loads content from a 'std::stream' object.
+ *     'ByteLoader_wstream' loads content from a 'std::wstream' object.
+ *     'ByteLoader_POSIX' loads content from a 'POSIX' file descriptor.
+ *
+ * Ownership of file/stream/socket handles is passed to the 'ByteLoader'. The
+ * handle is closed and destructed along with the ByteLoader's destruction.
+ *
+ * (C) Frank-Rene Schaefer                                                    */
+#ifndef  QUEX_INCLUDE_GUARD__QUEX__BYTE_LOADER__BYTE_LOADER
+#define  QUEX_INCLUDE_GUARD__QUEX__BYTE_LOADER__BYTE_LOADER
+
+$$INC: quex/MemoryManager$$
+$$INC: quex/types.h$$
+$$INC: quex/standard_functions$$
+
+QUEX_NAMESPACE_QUEX_OPEN
+
+typedef struct QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT QUEX_NAME_LIB(ByteLoader_tag) {
+    QUEX_TYPE_STREAM_POSITION (*tell)(struct QUEX_GNAME_LIB(ByteLoader_tag)* me);
+    void                      (*seek)(struct QUEX_GNAME_LIB(ByteLoader_tag)* me, 
+                                      QUEX_TYPE_STREAM_POSITION Pos);
+    size_t                    (*load)(struct QUEX_GNAME_LIB(ByteLoader_tag)*, 
+                                      void*, const size_t,
+                                      bool*  end_of_stream_f);
+    void                      (*destruct)(struct QUEX_GNAME_LIB(ByteLoader_tag)*);
+    void                      (*print_this)(struct QUEX_GNAME_LIB(ByteLoader_tag)*);
+
+    /* .compare_handle(A, B):
+     *
+     * Quex checks whether A and B are of the same class (comparing the
+     * function pointer '.load'). The derived class can safely cast both
+     * to its pointer type.
+     *
+     * Upon reset, the the new input handle might be the same as the old one.
+     * Such a usage is against the design of the reset functions! To detect
+     * these situations, the byte loader provides '.compare_handle()'.
+     *
+     * In case of doubt, return always 'false'. The only disadvantage is that
+     * if the user makes the aforementioned error, he will not get a nice hint
+     * upon crash.                                                           
+     *
+     * ByteLoader_FILE, ByteLoader_stream, and ByteLoader_POSIX implement the
+     * function propperly.                                                    */
+    bool  (*compare_handle)(const struct QUEX_GNAME_LIB(ByteLoader_tag)* A, 
+                            const struct QUEX_GNAME_LIB(ByteLoader_tag)* B);
+
+    /* .on_nothing(...)
+     * 
+     * When '.load' cannot provide anymore data, customized actions may be 
+     * performed. 
+     *
+     * -- If '.on_nothing' is not defined, '.load' returns zero and the
+     *    caller must assume that the stream terminated. 
+     * -- Else, the user defined '.no_nothing()' function is called. If it
+     *    returns 'true', '.load' tries again to load data. Else, '.load()'
+     *    returns with zero. Then, the caller, again, must assume that the
+     *    end of stream has been reached.                                     */
+    bool  (*on_nothing)(struct QUEX_GNAME_LIB(ByteLoader_tag)*, size_t TryN, size_t RequestN);
+
+    E_Ownership               ownership;
+
+    /* Upon construction, the stream handle may be setup to a particular 
+     * position in the stream. This is going to be the reference position.   
+     * The consideration of offsets is handled in this base class' functions.
+     * The derived class does not need to know about an initial offset.       */
+    QUEX_TYPE_STREAM_POSITION chunk_position_of_read_byte_i_zero;
+
+    /* Byte index of the next byte to be read. This is not necessarily the
+     * same as the return value of the 'tell()' functions.                    */
+    QUEX_TYPE_STREAM_POSITION read_byte_i;
+
+    /* It is crucial for 'seeking' in the stream whether the stream is in 
+     * binary mode or not. If not, then character/byte number is not const.   */
+    bool                      binary_mode_f;    /* In doubt, say 'false'.     */
+
+    size_t                    chunk_size_in_bytes; /* Granularity in bytes.   */
+
+    struct {
+        void    (*chunk_seek)(struct QUEX_GNAME_LIB(ByteLoader_tag)*, 
+                              QUEX_TYPE_STREAM_POSITION);
+        size_t  (*chunk_load)(struct QUEX_GNAME_LIB(ByteLoader_tag)*, void*, const size_t, 
+                                          bool*);
+        void    (*print_this)(struct QUEX_GNAME_LIB(ByteLoader_tag)*);
+    } derived;
+} QUEX_NAME_LIB(ByteLoader);
+
+extern void  QUEX_NAME_LIB(ByteLoader_construct)(QUEX_GNAME_LIB(ByteLoader)*                me, 
+                                      bool                       BinaryModeF,
+                                      size_t                     ChunkSizeInBytes,
+                                      QUEX_TYPE_STREAM_POSITION  ChunkPositionOfReadByteIdxZero,
+                                      void                       (*seek)(QUEX_GNAME_LIB(ByteLoader)* me, QUEX_TYPE_STREAM_POSITION Pos),
+                                      size_t                     (*load)(QUEX_GNAME_LIB(ByteLoader)*, void*, const size_t, bool*),
+                                      void                       (*destruct)(QUEX_GNAME_LIB(ByteLoader)*),
+                                      void                       (*print_this)(QUEX_GNAME_LIB(ByteLoader)*),
+                                      bool                       (*compare_handle)(const QUEX_GNAME_LIB(ByteLoader)*, 
+                                                                                   const QUEX_GNAME_LIB(ByteLoader)*));
+extern void  QUEX_NAME_LIB(ByteLoader_seek_disable)(QUEX_GNAME_LIB(ByteLoader)* me);
+extern bool  QUEX_NAME_LIB(ByteLoader_seek_is_enabled)(QUEX_GNAME_LIB(ByteLoader)* me);
+extern bool  QUEX_NAME_LIB(ByteLoader_is_equivalent)(const QUEX_GNAME_LIB(ByteLoader)* A, 
+                                                     const QUEX_GNAME_LIB(ByteLoader)* B);
+extern void  QUEX_NAME_LIB(ByteLoader_delete)(QUEX_GNAME_LIB(ByteLoader)** me);
+
+QUEX_NAMESPACE_QUEX_CLOSE
+
+#endif /*  QUEX_INCLUDE_GUARD__QUEX__BYTE_LOADER__BYTE_LOADER */

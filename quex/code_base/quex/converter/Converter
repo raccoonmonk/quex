@@ -1,0 +1,109 @@
+/* -*- C++ -*-  vim: set syntax=cpp:
+ * (C) 2007-2016 Frank-Rene Schaefer  */
+#ifndef  QUEX_INCLUDE_GUARD__QUEX__CONVERTER__CONVERTER
+#define  QUEX_INCLUDE_GUARD__QUEX__CONVERTER__CONVERTER
+
+$$INC: quex/MemoryManager$$
+$$INC: quex/bom$$
+
+QUEX_NAMESPACE_QUEX_OPEN
+
+typedef struct QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT QUEX_NAME_LIB(Converter_tag) {
+    E_LoadResult    (*convert)(struct QUEX_NAME_LIB(Converter_tag)*, 
+                               uint8_t**           source, const uint8_t*           SourceEnd, 
+                               void** drain,       const void* DrainEnd);
+    ptrdiff_t       (*stomach_byte_n)(struct QUEX_NAME_LIB(Converter_tag)*);
+    void            (*stomach_clear)(struct QUEX_NAME_LIB(Converter_tag)*);
+    void            (*print_this)(struct QUEX_NAME_LIB(Converter_tag)*);
+    void            (*destruct)(struct QUEX_NAME_LIB(Converter_tag)*);
+
+    /* Tries to convert all lexatoms given in 'source' with the coding
+     * specified earlier to _open(...). 'source' and 'drain' are passed as
+     * pointers to pointers so that the pointers can be changed. This way the
+     * converter can inform the user about the state of conversion from source
+     * to drain buffer.
+     *
+     * BEFORE:         *source              SourceEnd
+     *                 |                    |
+     *          [      .....................]   source buffer
+     *
+     *               *drain         DrainEnd
+     *               |              |
+     *          [....               ] drain buffer
+     *
+     *       At the beginning, 'source' points to the first lexatom to be
+     *       converted. 'drain' points to the place where the first converted
+     *       lexatom is to be written to.
+     *  
+     * AFTER:                          *source                              
+     *                                 |     
+     *          [                      .....]   source buffer
+     *
+     *                        *drain 
+     *                        |      
+     *          [.............      ] drain buffer
+     *
+     *       After conversion, 'source' points immediately behind the last 
+     *       lexatom that was subject to conversion. 'drain' points behind the
+     *       last lexatom that resulted from the conversion. 
+     *  
+     * RETURNS:  true  --> Drain buffer is filled as much as possible with 
+     *                     converted lexatoms.
+     *           false --> More source bytes are needed to fill drain buffer. */
+
+    /* [OPTIONAL] 'stomach_clear()', 'stomach_byte_n()': can be set to '0x0'. 
+     *
+     * This function is called whenever a conversion discontinuity appears.
+     * Such cases appear only when the user navigates through the input
+     * stream (seek_lexatom_index(...)), or with long pre-conditions when
+     * the buffer size is exceeded. 
+     *
+     * For 'normal' converters this function can be set to '0x0'. If a converter
+     * has an internal 'statefulness' that is difficult to be tamed, then use
+     * this function to reset the converter. Actually, the initial reason
+     * for introducing the function pointer was the strange behavior of the 
+     * ICU Converters of IBM(R).                                              */
+
+
+    /* Number of bytes required to produce a lexatom. If this is not constant,
+     * such as in UTF8, then it is set to '-1'.                               */
+    int     byte_n_per_lexatom;
+
+    /* Size of a lexatom, that is the space it occupies in the buffer, in bits.
+     *                                                                        */
+    size_t  lexatom_size_bit;
+
+    /* Some encodings (such as UTF-8) occupy different number of bytes for
+     * different lexatoms. Others, such as ASCII or UCS-4 use the same number
+     * of bytes for all lexatoms of the lexatom set. Using the flag, the buffer
+     * filler can adapt the seek algorithm for navigation in the lexatom
+     * stream.                                                                */
+
+    size_t  input_code_unit_size;                      /* -1 => undetermined. */
+    /* Converters convert input streams of a specific codec. Examples: The 
+     * 'code unit' of UTF8 is a byte, the code unit of UTF16 is 2byte.        */
+
+    bool    virginity_f;
+
+} QUEX_NAME_LIB(Converter);
+
+extern bool QUEX_NAME_LIB(Converter_construct)(QUEX_GNAME_LIB(Converter)* me,
+                                               size_t       LexatomSize_bit,
+                                               size_t       InputCodeUnitSize,
+                                               E_LoadResult (*convert)(QUEX_GNAME_LIB(Converter)*, 
+                                                                       uint8_t**           source, 
+                                                                       const uint8_t*      SourceEnd, 
+                                                                       void**              drain,  
+                                                                       const void*         DrainEnd),
+                                               void         (*delete_self)(QUEX_GNAME_LIB(Converter)*),
+                                               ptrdiff_t    (*stomach_byte_n)(QUEX_GNAME_LIB(Converter)*),
+                                               void         (*stomach_clear)(QUEX_GNAME_LIB(Converter)*),
+                                               void         (*print_this)(QUEX_GNAME_LIB(Converter)*));
+
+extern void QUEX_NAME_LIB(Converter_delete)(QUEX_GNAME_LIB(Converter)** me);
+extern void QUEX_NAME_LIB(Converter_reset)(QUEX_GNAME_LIB(Converter)* me);
+extern void QUEX_NAME_LIB(Converter_print_this)(QUEX_GNAME_LIB(Converter)* me);
+
+QUEX_NAMESPACE_QUEX_CLOSE
+
+#endif /* QUEX_INCLUDE_GUARD__QUEX__CONVERTER__CONVERTER */

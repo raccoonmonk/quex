@@ -1,0 +1,31 @@
+Test the DFA Examination
+------------------------------------------------
+python    test-*.py
+python -O no-assert-test-*.py
+--not __init__.py
+--not helper.py
+--not *fine*.py
+------------------------------------------------
+
+Tests in this directory test the state machine examination.  The procedure and
+its rationale is described in 00-README.txt and the other text files. The
+examination is controlled by a class derived from 'Recipe'. There are two types
+of tests:
+
+(1) General Tests
+
+    Those test rely on 'TestRecipe' which serves as a placeholder for real
+    investigated behavior. 
+    
+    File name pattern: 'g-*.py'.
+
+(2) Applied Recipe Tests.
+
+    Those tests check for the application of the procedure to a particular
+    investigated behavior. They use a real existing derived class of
+    'Recipe'.  
+    
+    File name pattern: 'x-*.py' where 'x' is the name of the investigated
+    behavior.
+
+        

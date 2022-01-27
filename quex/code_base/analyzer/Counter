@@ -1,0 +1,53 @@
+/* -*- C++ -*-   vim: set syntax=cpp:
+ * (C) Frank-Rene Schaefer                               */
+#ifndef QUEX_INCLUDE_GUARD__ANALYZER__COUNTER
+#define QUEX_INCLUDE_GUARD__ANALYZER__COUNTER
+
+$$INC: quex/types.h$$
+
+$$INC: definitions$$
+
+QUEX_NAMESPACE_MAIN_OPEN
+
+$$<indentation>------------------------------------------------------------------
+typedef struct QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT {
+    QUEX_TYPE_INDENTATION   front[QUEX_SETTING_INDENTATION_STACK_SIZE];
+    QUEX_TYPE_INDENTATION*  back;         /* pointer to last element */
+    QUEX_TYPE_INDENTATION*  memory_end;
+} QUEX_NAME(IndentationStack);
+
+QUEX_INLINE void
+QUEX_NAME(IndentationStack_init)(QUEX_NAME(IndentationStack)* me);
+$$-------------------------------------------------------------------------------
+
+typedef struct QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT {
+    $$<count-line>-----------------------------------------------------------
+    size_t  _line_number_at_begin;    /* line where current pattern starts   */
+    size_t  _line_number_at_end;      /* line after current pattern          */
+    $$-----------------------------------------------------------------------
+    $$<count-column>---------------------------------------------------------
+    size_t  _column_number_at_begin;  /* column where current pattern starts */
+    size_t  _column_number_at_end;    /* column after current pattern        */
+    $$-----------------------------------------------------------------------
+    $$<indentation> QUEX_NAME(IndentationStack) _indentation_stack;$$
+} QUEX_NAME(Counter);
+
+
+QUEX_INLINE bool  QUEX_NAME(Counter_construct)(QUEX_NAME(Counter)*  me); 
+QUEX_INLINE void  QUEX_NAME(Counter_copy_construct)(QUEX_NAME(Counter)*      me, 
+                                                    const QUEX_NAME(Counter)* That);
+QUEX_INLINE void  QUEX_NAME(Counter_resources_absent_mark)(QUEX_NAME(Counter)* me);
+QUEX_INLINE bool  QUEX_NAME(Counter_resources_absent)(QUEX_NAME(Counter)* me);
+
+QUEX_INLINE void  QUEX_NAME(Counter_print_this)(QUEX_NAME(Counter)* me);
+
+#if ! defined(QUEX_OPTION_ASSERTS)
+#   define        QUEX_NAME(Counter_assert_consistency)(ME) /* empty */
+#else
+QUEX_INLINE void  QUEX_NAME(Counter_assert_consistency)(QUEX_NAME(Counter)* counter);
+#endif
+
+QUEX_NAMESPACE_MAIN_CLOSE
+
+#endif /* QUEX_INCLUDE_GUARD__ANALYZER__COUNTER */
+

@@ -1,0 +1,71 @@
+/* -*- C++ -*-  vim:set syntax=cpp: 
+ *
+ * (C) 2004-2010 Frank-Rene Schaefer
+ * ABSOLUTELY NO WARRANTY              */
+#ifndef QUEX_INCLUDE_GUARD__ANALYZER__MODE
+#define QUEX_INCLUDE_GUARD__ANALYZER__MODE
+
+$$INC: definitions$$
+$$INC: buffer/Buffer$$
+
+QUEX_NAMESPACE_MAIN_OPEN
+    
+$$<Cpp> class QUEX_TYPE0_ANALYZER;$$
+$$<C>   QUEX_TYPE0_ANALYZER;$$
+
+typedef struct QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT QUEX_NAME(Mode_tag) {  
+    const char* name;
+
+$$<indentation>----------------------------------------------------------------
+    void (*on_indentation)(QUEX_TYPE_ANALYZER*    lexer, 
+                           QUEX_TYPE_INDENTATION  Indentation, 
+                           QUEX_TYPE_LEXATOM*     Begin);
+$$-----------------------------------------------------------------------------
+    void (*on_entry)(QUEX_TYPE_ANALYZER*, const struct QUEX_NAME(Mode_tag)* FromMode);
+    void (*on_exit)(QUEX_TYPE_ANALYZER*, const struct QUEX_NAME(Mode_tag)* ToMode);
+#   ifdef QUEX_OPTION_ASSERTS
+    bool (*has_base)(const struct QUEX_NAME(Mode_tag)* Mode);
+    bool (*has_entry_from)(const struct QUEX_NAME(Mode_tag)* Mode);
+    bool (*has_exit_to)(const struct QUEX_NAME(Mode_tag)* Mode);
+#   endif
+
+    QUEX_NAME(Buffer_event_callbacks) buffer_callbacks;
+
+    /* Choose the analyzer function to be the last, because it has a unique
+     * signature. The function pointers are assigned in a table. If the 
+     * content of this class changes, any mismatch of pointers is likely
+     * to trigger a compilation error, thus signalling that the setup is
+     * incorrect.                                                        */
+    QUEX_NAME(AnalyzerFunctionP)      analyzer_function;
+} QUEX_NAME(Mode);
+
+QUEX_INLINE void
+QUEX_NAME(Mode_uncallable_analyzer_function)(QUEX_TYPE_ANALYZER*);
+
+$$<indentation>----------------------------------------------------------------
+QUEX_INLINE void
+QUEX_NAME(Mode_on_indentation_null_function)(QUEX_TYPE_ANALYZER*    lexer, 
+                                             QUEX_TYPE_INDENTATION  Indenation, 
+                                             QUEX_TYPE_LEXATOM*     Begin);
+$$-----------------------------------------------------------------------------
+
+QUEX_INLINE void
+QUEX_NAME(Mode_on_entry_exit_null_function)(QUEX_TYPE_ANALYZER*, const QUEX_NAME(Mode)*);
+
+typedef struct QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT {
+    const QUEX_NAME(Mode)** begin;
+    const QUEX_NAME(Mode)** end;
+    const QUEX_NAME(Mode)** memory_end;
+} QUEX_NAME(ModeStack);
+
+QUEX_INLINE bool  QUEX_NAME(ModeStack_construct)(QUEX_NAME(ModeStack)* me,
+                                                 const size_t          N);
+QUEX_INLINE void  QUEX_NAME(ModeStack_destruct)(QUEX_NAME(ModeStack)* me);
+QUEX_INLINE void  QUEX_NAME(ModeStack_resources_absent_mark)(QUEX_NAME(ModeStack)* me);
+QUEX_INLINE bool  QUEX_NAME(ModeStack_resources_absent)(QUEX_NAME(ModeStack)* me);
+QUEX_INLINE void  QUEX_NAME(ModeStack_print)(QUEX_NAME(ModeStack)* me);
+
+QUEX_NAMESPACE_MAIN_CLOSE
+
+
+#endif /* QUEX_INCLUDE_GUARD__ANALYZER__QUEX_MODE */

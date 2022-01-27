@@ -1,0 +1,27 @@
+#ifndef  QUEX_INCLUDE_GUARD__QUEX__BYTE_LOADER__BYTE_LOADER_LINUX_VFS_UNTESTED
+#define  QUEX_INCLUDE_GUARD__QUEX__BYTE_LOADER__BYTE_LOADER_LINUX_VFS_UNTESTED
+$$INC: quex/byte_loader/ByteLoader$$
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <linux/fs.h>
+
+#ifdef __cplusplus
+}
+#endif
+
+QUEX_NAMESPACE_MAIN_OPEN
+
+QUEX_CLASS_BEGIN(ByteLoader_LinuxVFS,ByteLoader)
+    struct file*   file_p;
+QUEX_CLASS_END(ByteLoader_LinuxVFS)
+
+QUEX_INLINE QUEX_NAME_LIB(ByteLoader)*    QUEX_NAME_LIB(ByteLoader_SysCall_new)(int fd);
+QUEX_INLINE QUEX_NAME_LIB(ByteLoader)*    QUEX_NAME_LIB(ByteLoader_SysCall_new_from_file_name)(const char*);
+
+QUEX_NAMESPACE_MAIN_CLOSE
+
+#endif /*  QUEX_INCLUDE_GUARD__QUEX__BYTE_LOADER__BYTE_LOADER_LINUX_VFS_UNTESTED */
+

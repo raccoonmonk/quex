@@ -1,0 +1,54 @@
+/* ByteLoader_OSAL: ByteLoader for OSAL - Environments
+ *
+ * OSAL is copyright iof US National and Aeronautics Space Association (NASA)
+ * Goddard Space Flight Center.
+ * 
+ * The 'ByteLoader_OSAL' implements only the interface towards OSAL functions.
+ * To be functional, it has to be linked with the according OSAL files namely
+ *
+ *                    $OSAL_SRC/src/os/$OS_TYPE/osfileapi.c
+ *                    $OSAL_SRC/src/os/$OS_TYPE/osfilesys.c
+ *                    $OSAL_SRC/src/os/$OS_TYPE/osapi.c		
+ *                    $OSAL_SRC/src/os/$OS_TYPE/osloader.c
+ *                    $OSAL_SRC/src/os/$OS_TYPE/osnetwork.c	
+ *                    $OSAL_SRC/src/os/$OS_TYPE/ostimer.c	
+ *                    $OSAL_SRC/src/bsp/$OS/src/bsp_voltab.c
+ * 
+ * Those files are governed by the NASA Open Source Agreement and may be used, 
+ * distributed and modified only pursuant to the terms of that agreement.
+ *
+ * AUTHOR of 'ByteLoader_OSAL': Frank-Rene Schaefer
+ * LICENCE of 'ByteLoader_OSAL': MIT License.                                 */
+#ifndef  QUEX_INCLUDE_GUARD__QUEX__BYTE_LOADER__BYTE_LOADER_OSAL
+#define  QUEX_INCLUDE_GUARD__QUEX__BYTE_LOADER__BYTE_LOADER_OSAL
+
+$$INC: quex/byte_loader/ByteLoader$$
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#include <osapi.h>     /* Usually located in directory '$OSAL_SRC/src/os/inc' */
+
+#ifdef __cplusplus
+}
+#endif
+QUEX_NAMESPACE_QUEX_OPEN
+
+QUEX_CLASS_BEGIN(ByteLoader_OSAL,ByteLoader)
+    $$<Cpp>QUEX_NAME_LIB(ByteLoader_OSAL)(int32 fd);$$
+    $$<Cpp>QUEX_NAME_LIB(ByteLoader_OSAL)(const char* FileName);$$
+    int32                    fd;
+QUEX_CLASS_END(ByteLoader_OSAL)
+
+extern QUEX_GNAME_LIB(ByteLoader)* QUEX_NAME_LIB(ByteLoader_OSAL_new)(int32 fd);
+extern QUEX_GNAME_LIB(ByteLoader)* QUEX_NAME_LIB(ByteLoader_OSAL_new_from_file_name)(const char*);
+extern bool                        QUEX_NAME_LIB(ByteLoader_OSAL_construct)(QUEX_GNAME_LIB(ByteLoader_OSAL)* me, int32 fd);
+extern bool                        QUEX_NAME_LIB(ByteLoader_OSAL_construct_from_file_name)(QUEX_GNAME_LIB(ByteLoader_OSAL)* me, 
+                                                                                           const char*                       FileName);
+
+QUEX_NAMESPACE_QUEX_CLOSE
+
+#endif /*  QUEX_INCLUDE_GUARD__QUEX__BYTE_LOADER__BYTE_LOADER_OSAL */
+

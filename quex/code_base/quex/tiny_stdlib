@@ -1,0 +1,92 @@
+#ifndef QUEX_INCLUDE_GUARD__QUEX__TINY_STDLIB
+#define QUEX_INCLUDE_GUARD__QUEX__TINY_STDLIB
+/* PURPOSE: A minimalist implementation of some standard library functions.
+ *
+ * In environments, where there is no standard librar, this set of functions
+ * provides the necessary framework to run a lexical analyzer. It includes the
+ * memory and string functions 'memcpy()', 'memmove()', 'memset()', 'memcmp()',
+ * 'strcmp()', 'strcpy()', and 'strlen()'. Further, for memory management the
+ * standard functions 'malloc()', 'calloc()', 'free()' and 'realloc()' are
+ * implemented, so that they manage a given chunk of static memory and provide
+ * memory regions.
+ *
+ * Compliance: POSIX.1-2001, POSIX.1-2008, C89, and C99.
+ *
+ * (C) Frank-Rene Schaefer; License MIT.
+ *____________________________________________________________________________*/
+
+$$INC: quex/types.h$$
+
+$$<C && std-lib>   #include <errno.h>$$
+$$<Cpp && std-lib> #include <cerrno>$$
+$$<not-std-lib>---------------------------------------------------------------------
+#define ENOMEM  12
+#if ! defined(GCC) && GCC_VERSION
+extern int errno;
+#else
+extern __thread int errno;
+#endif
+$$----------------------------------------------------------------------------------
+
+QUEX_NAMESPACE_QUEX_STDLIB_OPEN
+
+extern void    QUEX_STD(stdlib_init)(void* memory, size_t size);
+
+extern void    QUEX_STD(memcpy)(void* destination, const void* source, size_t size);
+extern void    QUEX_STD(memmove)(void* destination, const void* source, size_t size);
+extern void*   QUEX_STD(memset)(void *s, int c, size_t n);
+extern int     QUEX_STD(memcmp)(const void *s1, const void *s2, size_t n);
+extern int     QUEX_STD(strcmp)(const char *s1, const char *s2);
+extern char*   QUEX_STD(strcpy)(char *dest, const char *src);
+extern size_t  QUEX_STD(strlen)(const char *s);
+
+extern void*   QUEX_STD(malloc)(size_t size);
+extern void*   QUEX_STD(calloc)(size_t size);
+extern void    QUEX_STD(free)(void *ptr);
+extern void*   QUEX_STD(realloc)(void *ptr, size_t size);
+
+typedef struct QUEX_STD(MemoryBlock_tag) {
+    ptrdiff_t  dnext;
+    bool       free_f;
+} QUEX_STD(MemoryBlock);
+
+#define QUEX_STD(MemoryGranularity) sizeof(QUEX_STD(MemoryBlock))
+
+typedef struct {
+    size_t malloc_n;
+    size_t malloc_failure_n;
+    size_t malloc_search_step_n_total;
+    size_t malloc_search_step_n_watermark;
+    size_t free_n;
+    size_t realloc_n;
+    size_t realloc_failure_n;
+} QUEX_STD(MallocStatistic_calls);
+
+typedef struct {
+    size_t n;
+    size_t largest_size_in_byte;
+    size_t smallest_size_in_byte;
+} QUEX_STD(MallocStatistic_regions);
+
+typedef struct {
+    size_t free_byte_n;
+    size_t allocated_byte_n;
+    size_t allocated_byte_n_watermark;
+    size_t granularity_in_byte;
+
+    QUEX_STD(MallocStatistic_regions) free_regions;
+    QUEX_STD(MallocStatistic_regions) allocated_regions;
+    QUEX_STD(MallocStatistic_calls)   calls;
+
+} QUEX_STD(MallocStatistic);
+
+extern void  QUEX_STD(MallocStatistic_get)(QUEX_STD(MallocStatistic)* s);
+
+#ifdef QUEXLIB_OPTION_PRINT_POOL_EXT
+extern void  QUEX_STD(MallocStatistic_print_pool)(void);
+#endif /* QUEXLIB_OPTION_PRINT_POOL_EXT */
+
+
+QUEX_NAMESPACE_QUEX_STDLIB_CLOSE
+
+#endif /* QUEX_INCLUDE_GUARD__QUEX__STANDARD_FUNCTIONS */

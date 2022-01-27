@@ -1,0 +1,92 @@
+
+                  (0)--->(1)---> .... (StateN-1)
+    
+(0) Store InputP 100
+(1) Store InputP 11111
+(1) Accept 111/11
+(2) Accept 222/22
+(3) Accept 33
+(4) Accept 44
+(5) Accept 55
+(6) Accept 666/66R
+
+All states present in 'sm' are either linear states or mouth states?  True
+There are no undetermined mouth states?  True
+There are no undetermined entry recipes into mouth states?  True
+Linear States:  [0L, 1L, 2L, 3L, 4L, 5L, 6L]
+Mouth States:  []
+
+
+Linear States:
+  00     Accepter:
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: 0
+           [100] offset: 0
+     
+  01     Accepter:
+           pre111 => 11
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -1
+           [11] offset: 0
+           [100] offset: -1
+           [11111] offset: 0
+     
+  02     Accepter:
+           pre222 => 22
+           pre111 => 11
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -2
+           [11] offset: -1
+           [22] offset: 0
+           [100] offset: -2
+           [11111] offset: -1
+     
+  03     Accepter:
+           33
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: 0
+           [11] offset: -2
+           [22] offset: -1
+           [100] offset: -3
+           [11111] offset: -2
+     
+  04     Accepter:
+           44
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: 0
+           [11] offset: -3
+           [22] offset: -2
+           [100] offset: -4
+           [11111] offset: -3
+     
+  05     Accepter:
+           55
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: 0
+           [11] offset: -4
+           [22] offset: -3
+           [100] offset: -5
+           [11111] offset: -4
+     
+  06     Accepter:
+           pre666 => 66
+           55
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -1
+           [11] offset: -5
+           [22] offset: -4
+           [66] offset: 0
+           [100] offset: -6
+     
+           [11111] offset: -5
+Mouth States:
+
+
+
+
+
+
+

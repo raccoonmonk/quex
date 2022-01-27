@@ -1,0 +1,72 @@
+/* -*- C++ -*-   vim: set syntax=cpp: 
+ * (C) 2004-2009 Frank-Rene Schaefer
+ * ABSOLUTELY NO WARRANTY
+ */
+#ifndef QUEX_TOKEN_INCLUDE_GUARD__TOKEN__GENERATED
+#define QUEX_TOKEN_INCLUDE_GUARD__TOKEN__GENERATED
+
+$$HEADER$$
+ 
+$$HELPER_DEFINITIONS$$
+
+QUEX_NAMESPACE_TOKEN_OPEN
+
+class $$TOKEN_CLASS$$;
+
+QUEX_INLINE void         QUEX_NAME_TOKEN(construct)($$TOKEN_CLASS$$*);
+QUEX_INLINE void         QUEX_NAME_TOKEN(copy)($$TOKEN_CLASS$$*, const $$TOKEN_CLASS$$*);
+QUEX_INLINE void         QUEX_NAME_TOKEN(destruct)($$TOKEN_CLASS$$*);
+
+$$<token-take-text>------------------------------------------------------------
+QUEX_INLINE void         QUEX_NAME_TOKEN(take_text)($$TOKEN_CLASS$$*            me, 
+                                                    const QUEX_TYPE_LEXATOM* Begin, 
+                                                    const QUEX_TYPE_LEXATOM* End);
+$$-----------------------------------------------------------------------------
+
+class QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT $$TOKEN_CLASS$$ {
+public:
+    $$TOKEN_CLASS$$();
+    $$TOKEN_CLASS$$(const $$TOKEN_CLASS$$& That);
+    /* operator=(..): USE WITH CAUTION--POSSIBLE MAJOR PERFORMANCE DECREASE! 
+     *                BETTER USE __copy(That)                                */
+    $$TOKEN_CLASS$$& operator=(const $$TOKEN_CLASS$$& That);
+    $$VIRTUAL_DESTRUCTOR$$~$$TOKEN_CLASS$$();
+
+public:
+    QUEX_TYPE_TOKEN_ID                               id;
+    $$<token-stamp-line>   QUEX_TYPE_TOKEN_LINE_N    line_n;$$
+    $$<token-stamp-column> QUEX_TYPE_TOKEN_COLUMN_N  column_n;$$
+
+$$DISTINCT_MEMBERS$$
+$$UNION_MEMBERS$$
+$$SETTERS_GETTERS$$
+    void set(const QUEX_TYPE_TOKEN_ID ID) { id = ID; }
+$$QUICK_SETTERS$$
+
+public:
+#   define self (*this)
+$$BODY$$
+#   undef  self
+
+private:
+    friend void $$TOKEN_CLASS$$_construct($$TOKEN_CLASS$$* __this);
+    friend void $$TOKEN_CLASS$$_copy($$TOKEN_CLASS$$*       __this, 
+                                     const $$TOKEN_CLASS$$* That);
+$$<token-take-text>------------------------------------------------------------
+    friend void $$TOKEN_CLASS$$_take_text($$TOKEN_CLASS$$*             __this, 
+                                          const QUEX_TYPE_LEXATOM*  Begin, 
+                                          const QUEX_TYPE_LEXATOM*  End);
+$$-----------------------------------------------------------------------------
+};
+
+QUEX_NAMESPACE_TOKEN_CLOSE
+
+$$FOOTER$$
+
+QUEX_NAMESPACE_MAIN_OPEN
+
+extern QUEX_TYPE_LEXATOM QUEX_NAME(LexemeNull);
+
+QUEX_NAMESPACE_MAIN_CLOSE
+
+#endif /* QUEX_TOKEN_INCLUDE_GUARD__TOKEN__GENERATED */

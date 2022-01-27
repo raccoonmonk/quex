@@ -1,0 +1,54 @@
+/* -*- C++ -*- vim: set syntax=cpp: 
+ * (C) 2009 Frank-Rene Schaefer
+ * NO WARRANTY */
+#ifndef  QUEX_INCLUDE_GUARD__QUEX__CONVERTER__ICU__CONVERTER_ICU
+#define  QUEX_INCLUDE_GUARD__QUEX__CONVERTER__ICU__CONVERTER_ICU
+
+$$INC: quex/converter/Converter$$
+$$INC: quex/converter/icu/special_headers.h$$
+
+#if  defined(QUEX_SETTING_ICU_PIVOT_BUFFER_SIZE_EXT)
+#    define QUEX_SETTING_ICU_PIVOT_BUFFER_SIZE  QUEX_SETTING_ICU_PIVOT_BUFFER_SIZE_EXT
+#else
+#    define QUEX_SETTING_ICU_PIVOT_BUFFER_SIZE                               (64)
+#endif
+
+QUEX_NAMESPACE_QUEX_OPEN
+
+QUEX_CLASS_BEGIN(Converter_ICU,Converter) 
+$$<Cpp>------------------------------------------------------------------------
+    QUEX_NAME_LIB(Converter_ICU)(size_t LexatomSize_bit, const char* FromEncoding, const char* ToEncoding);
+    QUEX_NAME_LIB(Converter_ICU)(size_t LexatomSize_bit, E_ByteOrderMark);
+$$-----------------------------------------------------------------------------
+
+    UConverter*  from_handle;
+    UConverter*  to_handle;
+    UErrorCode   status;
+
+    UBool        reset_upon_next_conversion_f;
+
+    struct {
+        UChar    buffer[QUEX_SETTING_ICU_PIVOT_BUFFER_SIZE];
+        UChar*   source;
+        UChar*   target;
+    } pivot;
+
+QUEX_CLASS_END(Converter_ICU)
+
+extern QUEX_GNAME_LIB(Converter)* 
+QUEX_NAME_LIB(Converter_ICU_new)(size_t      LexatomSize_bit, 
+                                 const char* FromEncoding, 
+                                 const char* ToEncoding);
+extern bool 
+QUEX_NAME_LIB(Converter_ICU_construct)(QUEX_GNAME_LIB(Converter_ICU)* me, 
+                                       size_t                         LexatomSize_bit, 
+                                       const char*                    FromEncoding, 
+                                       const char*                    ToEncoding);
+extern bool
+QUEX_NAME_LIB(Converter_ICU_construct_from_BOM)(QUEX_GNAME_LIB(Converter_ICU)* me, 
+                                                size_t                           LexatomSize_bit, 
+                                                E_ByteOrderMark                  BomId);
+
+QUEX_NAMESPACE_QUEX_CLOSE
+
+#endif /*  QUEX_INCLUDE_GUARD__QUEX__CONVERTER__ICU__CONVERTER_ICU */

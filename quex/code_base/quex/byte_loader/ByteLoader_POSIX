@@ -1,0 +1,33 @@
+#ifndef  QUEX_INCLUDE_GUARD__QUEX__BYTE_LOADER__BYTE_LOADER_POSIX
+#define  QUEX_INCLUDE_GUARD__QUEX__BYTE_LOADER__BYTE_LOADER_POSIX
+
+$$INC: quex/byte_loader/ByteLoader$$
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <fcntl.h>  /* POSIX file handling. */
+#include <unistd.h> /* POSIX file handling. */
+
+#ifdef __cplusplus
+}
+#endif
+QUEX_NAMESPACE_QUEX_OPEN
+
+QUEX_CLASS_BEGIN(ByteLoader_POSIX,ByteLoader)
+    $$<Cpp>QUEX_NAME_LIB(ByteLoader_POSIX)(int fd);$$
+    $$<Cpp>QUEX_NAME_LIB(ByteLoader_POSIX)(const char* FileName);$$
+    int                    fd;
+QUEX_CLASS_END(ByteLoader_POSIX)
+
+extern QUEX_GNAME_LIB(ByteLoader)*    QUEX_NAME_LIB(ByteLoader_POSIX_new)(int fd);
+extern QUEX_GNAME_LIB(ByteLoader)*    QUEX_NAME_LIB(ByteLoader_POSIX_new_from_file_name)(const char*);
+extern bool   QUEX_NAME_LIB(ByteLoader_POSIX_construct)(QUEX_GNAME_LIB(ByteLoader_POSIX)* me, int fd);
+extern bool   QUEX_NAME_LIB(ByteLoader_POSIX_construct_from_file_name)(QUEX_GNAME_LIB(ByteLoader_POSIX)* me, 
+                                                                       const char*                       FileName);
+
+QUEX_NAMESPACE_QUEX_CLOSE
+
+#endif /*  QUEX_INCLUDE_GUARD__QUEX__BYTE_LOADER__BYTE_LOADER_POSIX */
+

@@ -1,0 +1,4 @@
+token { X \repeatable; DEDENT \repeatable; }
+start = M;
+mode M { X => QUEX_TKN_X; }
+mode M2 : <indentation:> { ^X => QUEX_TKN_X; }  /* enfore begin of line pre-context */

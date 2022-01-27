@@ -1,0 +1,52 @@
+/* -*- C++ -*- vim: set syntax=cpp:
+ * (C) 2005-2010 Frank-Rene Schaefer
+ * ABSOLUTELY NO WARRANTY              */
+#ifndef QUEX_INCLUDE_GUARD__ANALYZER__STRUCT__INCLUDE_STACK
+#define QUEX_INCLUDE_GUARD__ANALYZER__STRUCT__INCLUDE_STACK
+
+$$INC: definitions$$
+
+QUEX_NAMESPACE_MAIN_OPEN 
+
+/* The constructor 'core' function is implemented per analyzer.
+ * It's implementation happens inside the generated source file.             */
+
+$$<std-lib>--------------------------------------------------------------------
+QUEX_INLINE bool QUEX_NAME(MF_include_push_file_name)(QUEX_TYPE_ANALYZER*   me,
+                                                   const char*           Filename, 
+                                                   QUEX_GNAME_LIB(Converter)* converter);
+
+$$-----------------------------------------------------------------------------
+QUEX_INLINE bool QUEX_NAME(MF_include_push_ByteLoader)(
+                           QUEX_TYPE_ANALYZER*    me,
+                           const char*            InputName,
+                           QUEX_GNAME_LIB(ByteLoader)* byte_loader,
+                           QUEX_GNAME_LIB(Converter)*  converter);
+
+QUEX_INLINE bool QUEX_NAME(MF_include_push_memory)(
+                           QUEX_TYPE_ANALYZER*  me,
+                           const char*          InputName,
+                           QUEX_TYPE_LEXATOM*   BufferMemoryBegin, 
+                           size_t               BufferMemorySize,
+                           QUEX_TYPE_LEXATOM*   BufferEndOfFileP); 
+
+/* Basic constructions ________________________________________________________
+ *                                                                           */
+QUEX_INLINE bool   QUEX_NAME(MF_include_push_core)(QUEX_TYPE_ANALYZER*       me,
+                                                const char*               InputNameP,
+                                                QUEX_NAME(Buffer)*        new_buffer,
+                                                QUEX_NAME(LexatomLoader)* new_filler);
+QUEX_INLINE bool   QUEX_NAME(MF_include_pop)(QUEX_TYPE_ANALYZER* me);
+QUEX_INLINE void   QUEX_NAME(MF_include_stack_delete)(QUEX_TYPE_ANALYZER* me);
+QUEX_INLINE bool   QUEX_NAME(MF_include_detect_recursion)(QUEX_TYPE_ANALYZER* me,
+                                                       const char*         InputName);
+
+extern bool        QUEX_NAME(user_memento_pack)(QUEX_TYPE_ANALYZER* me, 
+                                                const char*         InputName,
+                                                QUEX_TYPE_MEMENTO* memento);
+extern void        QUEX_NAME(user_memento_unpack)(QUEX_TYPE_ANALYZER* me, 
+                                                  QUEX_TYPE_MEMENTO* memento);
+
+QUEX_NAMESPACE_MAIN_CLOSE
+
+#endif /* QUEX_INCLUDE_GUARD__ANALYZER__STRUCT__INCLUDE_STACK */

@@ -1,0 +1,16 @@
+/* -*- C++ -*- vim: set syntax=cpp: */
+#ifndef QUEX_INCLUDE_GUARD__ANALYZER__ASSERTS
+#define QUEX_INCLUDE_GUARD__ANALYZER__ASSERTS
+
+$$INC: buffer/Buffer$$
+
+QUEX_NAMESPACE_MAIN_OPEN
+
+QUEX_INLINE QUEX_TYPE_LEXATOM*  QUEX_NAME(access_Lexeme)(const char* FileName, size_t LineN, QUEX_NAME(Buffer)*);
+QUEX_INLINE size_t              QUEX_NAME(access_LexemeL)(const char* FileName, size_t LineN, QUEX_NAME(Buffer)*);
+QUEX_INLINE QUEX_TYPE_LEXATOM*  QUEX_NAME(access_LexemeEnd)(const char* FileName, size_t LineN, QUEX_NAME(Buffer)*);
+
+QUEX_NAMESPACE_MAIN_CLOSE
+
+#endif /* __INCLUDE_GUARD__QUEX_LEXER_CLASS_COUNT_LINE_COLUMN_COMMON */
+

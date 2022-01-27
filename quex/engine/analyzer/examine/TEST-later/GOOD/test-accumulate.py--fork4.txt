@@ -1,0 +1,86 @@
+           
+                  .->--(1)-->--(2)-->--.
+                 /                      \  
+               (0)---->(3)---->(4)-->---(7)
+                 \                      /
+                  '->--(5)-->--(6)-->--'
+    
+Mouths ready for interference:
+   [7L]
+
+Linear States:
+  00     Accepter:
+           pre33 => 4711
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: 0
+           [4711] offset: 0
+     
+  01     Accepter:
+           pre33 => 4711
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -1
+           [4711] offset: -1
+     
+  02     Accepter:
+           pre33 => 4711
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -2
+           [4711] offset: -2
+     
+  03     Accepter:
+           pre33 => 4711
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -1
+           [4711] offset: -1
+     
+  04     Accepter:
+           pre33 => 4711
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -2
+           [4711] offset: -2
+     
+  05     Accepter:
+           pre33 => 4711
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -1
+           [4711] offset: -1
+     
+  06     Accepter:
+           pre33 => 4711
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -2
+           [4711] offset: -2
+     
+Mouth States:
+  07 <void>
+  from 2:
+    Accepter:
+      pre33 => 4711
+      MATCH_FAILURE
+    InputOffsetDb:
+      [CONTEXT_FREE_MATCH] offset: -3
+      [4711] offset: -3
+
+  from 4:
+    Accepter:
+      pre33 => 4711
+      MATCH_FAILURE
+    InputOffsetDb:
+      [CONTEXT_FREE_MATCH] offset: -3
+      [4711] offset: -3
+
+  from 6:
+    Accepter:
+      pre33 => 4711
+      MATCH_FAILURE
+    InputOffsetDb:
+      [CONTEXT_FREE_MATCH] offset: -3
+      [4711] offset: -3
+

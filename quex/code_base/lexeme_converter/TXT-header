@@ -1,0 +1,117 @@
+/* vim: set filetype=cpp:  -*- C++ -*-
+ *
+ * Declaration of all converter functions towards 'utf8', 'utf16', 'utf32',
+ * 'char', and 'wchar_t': 
+ *
+ * (C) 2018 Frank-Rene Schaefer. 
+ *     ABSOLUTELY NO WARRANTY                                                */
+#ifndef QUEX_LC_INCLUDE_GUARD__LEXEME__CONVERTER_FROM_LEXEME
+#define QUEX_LC_INCLUDE_GUARD__LEXEME__CONVERTER_FROM_LEXEME
+
+QUEX_NAMESPACE_MAIN_OPEN
+
+extern void
+QUEX_NAME(lexeme_to_utf8_character)(const QUEX_TYPE_LEXATOM** input_pp, 
+                                    uint8_t**                 output_pp);
+extern void
+QUEX_NAME(lexeme_to_utf16_character)(const QUEX_TYPE_LEXATOM**  input_pp, 
+                                     uint16_t**                 output_pp);
+extern void
+QUEX_NAME(lexeme_to_utf32_character)(const QUEX_TYPE_LEXATOM**  input_pp, 
+                                     uint32_t**                 output_pp);
+extern void
+QUEX_NAME(lexeme_to_char_character)(const QUEX_TYPE_LEXATOM**  input_pp, 
+                                    char**                     output_pp);
+extern void
+QUEX_NAME(lexeme_to_pretty_char_character)(const QUEX_TYPE_LEXATOM**  input_pp, 
+                                        char**                     output_pp);
+#if ! defined(QUEX_OPTION_WCHAR_T_DISABLED_EXT)
+extern void
+QUEX_NAME(lexeme_to_wchar_t_character)(const QUEX_TYPE_LEXATOM**  input_pp, 
+                                       wchar_t**                 output_pp);
+#endif
+
+/* (2) String converters */
+extern void
+QUEX_NAME(lexeme_nnzt_to_utf8)(const QUEX_TYPE_LEXATOM**  source_pp, 
+                               const QUEX_TYPE_LEXATOM*   SourceEnd, 
+                               uint8_t**                 drain_pp,  
+                               const uint8_t*            DrainEnd);
+extern void
+QUEX_NAME(lexeme_nnzt_to_utf16)(const QUEX_TYPE_LEXATOM**  source_pp, 
+                                const QUEX_TYPE_LEXATOM*   SourceEnd, 
+                                uint16_t**                drain_pp,  
+                                const uint16_t*           DrainEnd);
+extern void
+QUEX_NAME(lexeme_nnzt_to_utf32)(const QUEX_TYPE_LEXATOM**  source_pp, 
+                                const QUEX_TYPE_LEXATOM*   SourceEnd, 
+                                uint32_t**                drain_pp,  
+                                const uint32_t*           DrainEnd);
+extern void
+QUEX_NAME(lexeme_nnzt_to_char)(const QUEX_TYPE_LEXATOM**  source_pp, 
+                               const QUEX_TYPE_LEXATOM*   SourceEnd, 
+                               char**                    drain_pp,  
+                               const char*               DrainEnd);
+extern void
+QUEX_NAME(lexeme_nnzt_to_pretty_char)(const QUEX_TYPE_LEXATOM**  source_pp, 
+                                      const QUEX_TYPE_LEXATOM*   SourceEnd, 
+                                      char**                     drain_pp,  
+                                      const char*                DrainEnd);
+
+#if ! defined(QUEX_OPTION_WCHAR_T_DISABLED_EXT)
+extern void
+QUEX_NAME(lexeme_nnzt_to_wchar)(const QUEX_TYPE_LEXATOM**  source_pp, 
+                                const QUEX_TYPE_LEXATOM*   SourceEnd, 
+                                wchar_t**                  drain_pp,  
+                                const wchar_t*             DrainEnd);
+#endif
+
+/* (2) String converters */
+extern uint8_t*
+QUEX_NAME(lexeme_to_utf8)(const QUEX_TYPE_LEXATOM*  SourceBegin, 
+                          uint8_t*                  drain_p,  
+                          const uint8_t*            DrainEnd);
+extern uint16_t*
+QUEX_NAME(lexeme_to_utf16)(const QUEX_TYPE_LEXATOM*  SourceBegin, 
+                           uint16_t*                 drain_p,  
+                           const uint16_t*           DrainEnd);
+extern uint32_t*
+QUEX_NAME(lexeme_to_utf32)(const QUEX_TYPE_LEXATOM*  SourceBegin, 
+                           uint32_t*                 drain_p,  
+                           const uint32_t*           DrainEnd);
+extern char*
+QUEX_NAME(lexeme_to_char)(const QUEX_TYPE_LEXATOM*  SourceBegin, 
+                          char*                     drain_p,  
+                          const char*               DrainEnd);
+extern char*
+QUEX_NAME(lexeme_to_pretty_char)(const QUEX_TYPE_LEXATOM* SourceBegin, 
+                                 char*                    drain_p,  
+                                 const char*              DrainEnd);
+
+#if ! defined(QUEX_OPTION_WCHAR_T_DISABLED_EXT)
+extern wchar_t*
+QUEX_NAME(lexeme_to_wchar)(const QUEX_TYPE_LEXATOM* SourceBegin, 
+                           wchar_t*                 drain_p,  
+                           const wchar_t*           DrainEnd);
+#endif
+
+$$<Cpp && std-lib>--------------------------------------------------------------
+extern std::basic_string<uint8_t>
+QUEX_NAME(lexeme_to_utf8)(const std::basic_string<QUEX_TYPE_LEXATOM>& Source);
+extern std::basic_string<uint16_t>
+QUEX_NAME(lexeme_to_utf16)(const std::basic_string<QUEX_TYPE_LEXATOM>& Source);
+extern std::basic_string<uint32_t>
+QUEX_NAME(lexeme_to_utf32)(const std::basic_string<QUEX_TYPE_LEXATOM>& Source);
+extern std::basic_string<char>
+QUEX_NAME(lexeme_to_char)(const std::basic_string<QUEX_TYPE_LEXATOM>& Source);
+extern std::basic_string<char>
+QUEX_NAME(lexeme_to_pretty_char)(const std::basic_string<QUEX_TYPE_LEXATOM>& Source);
+#if ! defined(QUEX_OPTION_WCHAR_T_DISABLED_EXT)
+extern std::basic_string<wchar_t>
+QUEX_NAME(lexeme_to_wchar)(const std::basic_string<QUEX_TYPE_LEXATOM>& Source);
+#endif
+$$-----------------------------------------------------------------------------
+
+QUEX_NAMESPACE_MAIN_CLOSE
+
+#endif /* QUEX_LC_INCLUDE_GUARD__LEXEME__CONVERTER_FROM_LEXEME */

@@ -1,0 +1,164 @@
+/* Strexeme: [Str]ing originating from L[exeme]s.
+ *            ===                        ===== 
+ * 
+ * PROPERTIES:
+ *
+ *     -- Is a string of lexatoms that lives in a 'habitat'. 
+ *        The habitat is originally the buffer where the pattern
+ *        matched to identify a lexeme.
+ *
+ *     -- Does *not have ownership* over the string content! 
+ *
+ *     -- Its string content may be moved in the background. 
+ *
+ *     -- Can only be used in the *SAME THREAD* as the habitat.
+ *
+ * Strexeme-s exist for highly efficient communication of matched lexemes 
+ * which exist in the analyzer's buffer. The strings remain there as long
+ * as possible--therefore no allocation is required for copying them else-
+ * where. When the buffer's content changes, the habitat may adapt pointers
+ * or find a new habitat for the strings which correspond to lexemes that
+ * no longer fit into the buffer. This happens in the backround and is 
+ * *NOT THREAD-SAFE*. 
+ *
+ * If thread-safety is required the strings need to be copied manually, or
+ * new habitat must be provided in another thread.
+ *
+ * (C) 2017 Frank-Rene Schaefer                                               */
+#ifndef QUEX_INCLUDE_GUARD__OBSERVED_STRING__STREXEME
+#define QUEX_INCLUDE_GUARD__OBSERVED_STRING__STREXEME
+/*  
+ *  [ y == 23 ) { print 34; }]
+ *    |    |      |     |
+ *    |    |      |     \.. str0
+ *    |    |      \........ str1
+ *    |    \............... str2
+ *    \.................... str3
+ *
+ *  Strexemos are located in token.
+ *
+ * /                   
+typedef struct QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT QUEX_NAME_TOKEN(Strexemo_tag) {
+    QUEX_TYPE_LEXATOM*             begin;
+    QUEX_TYPE_LEXATOM*             end;
+    QUEX_NAME_TOKEN(Strexemo_tag)* __next;
+} QUEX_NAME_TOKEN(Strexemo); 
+
+Strexemo_construct(Strexemo*, ...);
+Strexemo_destruct(Strexemo*);
+Strexemo_strcmp(Strexemo* me, const Strexemo* Other); 
+Strexemo_strcmp(Strexemo* me, const QUEX_TYPE_LEXATOM* Begin, const QUEX_TYPE_LEXATOM* End);
+Strexemo_find(Strexemo*, QUEX_TYPE_LEXATOM*);
+Strexemo_findx(Strexemo*, Strexemo*);
+Strexemo_atoi(Strexemo*);
+Strexemo_atof(Strexemo*);
+Strexemo_crc8(Strexemo*);
+Strexemo_crc16(Strexemo*);
+Strexemo_crc32(Strexemo*);
+
+typedef struct QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT {
+   StrexemoPool  head;
+} StrexemoHabitat;
+    
+StrexemoHabitat_emigrate() {
+    // Compute required space
+    sum = 0;
+    for(it = me->begin; it ; it->__next) {
+        sum += (it->end - it->begin);
+    }
+
+    drain_p = QUEX_GNAME_LIB(MemoryManager_allocate)(sum, E_Habitat);
+    if( ! drain_p ) {
+        return false;
+    }
+    for(it = me->begin; it ; it->__next) {
+        element_n = it->end - it->begin;
+        drain_p   = mempcpy(drain_p, it->begin, 
+                            element_n * sizeof(QUEX_TYPE_LEXATOM));
+        it->begin = drain_p_before;
+        it->end   = &it->begin[element_n];
+    }
+}
+
+StrexemoHabitat_new_Strexeme(const QUEX_TYPE_LEXATOM* Begin,
+                             const QUEX_TYPE_LEXATOM* End)
+{
+    if( ! me->__first_free ) {
+        me->__first_free = QUEX_GNAME_LIB(MemoryManager_allocate)(some);
+        if( ! me->__first_free ) {
+            return (QUEX_NAME_TOKEN(Strexeme)*)0;
+        }
+    }
+    result           = me->__first_free;
+    me->__first_free = result.__next;
+    result.__next    = me->__first_used;
+    me->__first_used = result;       
+
+    result->begin = Begin;
+    result->end   = End;
+    return result;
+}
+
+Strexemo*
+StrexemoObserver_new(StrexemoObserver*,       
+                     const QUEX_TYPE_LEXATOM* LexemeBegin, 
+                     const QUEX_TYPE_LEXATOM* LexemeEnd);
+StrexemoObserver_isolate(StrexemoObserver*, Strexemo*);
+StrexemoObserver_isolate_unique(StrexemoObserver*, Strexemo*); // *> use crc
+StrexemoObserver_release(StrexemoObserver*, Strexemo*);
+StrexemoObserver_relocate(StrexemoObserver*);
+
+Strexemo*
+StrexemoObserver_new(StrexemoObserver*,       
+                     const QUEX_TYPE_LEXATOM* LexemeBegin, 
+                     const QUEX_TYPE_LEXATOM* LexemeEnd)
+{
+    Strexemo new_p = MemoryManager_allocate(..);
+    if( ! new_p ) return (Strexemo*)0;
+    Strexemo_construct(new_p, LexemeBegin, LexemeEnd);
+    
+    return new_p;
+}
+
+StrexemoObserver_delete(Strexemo* object)
+{
+    remove_from_list(me->first, object);
+}
+
+int
+Strexemo_cmp(Strexemo* A, AStr* B)
+{
+   QUEX_TYPE_LEXATOM* it0 = A->begin;
+   QUEX_TYPE_LEXATOM* it0 = A->begin;
+   QUEX_TYPE_LEXATOM* it1 = B->begin;
+   QUEX_TYPE_LEXATOM* it1 = B->begin;
+
+    for(; *it0 == *it1; ++it0, ++it1) {
+        /* Both letters are the same and == 0?
+         * => both reach terminall zero without being different. */
+        if( *it0 == 0 ) return 0;
+    }
+    return (size_t)(*it0) - (size_t)(*it1);
+}
+
+Strexemo*
+Strexemo_construct(Strexemo*                me,   
+                   StrexemoObserver*        observer, 
+                   const QUEX_TYPE_LEXATOM* LexemeBegin, 
+                   const QUEX_TYPE_LEXATOM* LexemeEnd)
+{
+    me->begin = LBegin;
+    me->end   = LEnd;
+    ++(me->end);
+}
+
+StrexemoObserver_StringList_new()
+{
+    StrexemoList* result = MemMan_StrexemoList_allocate();
+
+    result->begin      = MemMan_QstrArray_allocate();
+    result->end        = result->begin;
+    result->memory_end = result->begin + size;
+}
+
+#endif /* QUEX_INCLUDE_GUARD__OBSERVED_STRING__STREXEME */

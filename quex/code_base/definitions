@@ -1,0 +1,41 @@
+/* -*- C++ -*- vim: set syntax=cpp: 
+ * (C) 2005-2017 Frank-Rene Schaefer
+ * ABSOLUTELY NO WARRANTY                
+ *
+ * NOTE: '__VA_ARGS__' in macros is avoided because at the time of
+ *       this writing, even some prominent compilers choke on it. */
+#ifndef QUEX_INCLUDE_GUARD__DEFINITIONS
+#define QUEX_INCLUDE_GUARD__DEFINITIONS
+
+$$INC: quex/asserts$$
+$$INC: quex/debug_print$$
+$$INC: quex/types.h$$
+$$INC: quex/standard_functions$$
+$$INC: quex/enums$$
+$$INC: quex/operations$$
+
+/* Macro to customize an epilog to the classes, such as required to specify
+ * DLL compilation for with dedicated compilers.                              */ 
+#ifndef    QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT
+#   define QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT
+#endif
+
+#define QUEX_LEXEME_TERMINATING_ZERO_SET(BUFFER)                \
+     do { (BUFFER)->_lexatom_at_lexeme_start = (BUFFER)->_read_p[0]; \
+          (BUFFER)->_read_p[0]               = (QUEX_TYPE_LEXATOM)0; } while(0)
+
+#define QUEX_LEXEME_TERMINATING_ZERO_UNDO(BUFFER)                                 \
+     /* only need to reset, in case that the terminating zero was set*/           \
+     if( (BUFFER)->_lexatom_at_lexeme_start != (QUEX_TYPE_LEXATOM)0 ) {           \
+         /* NOTE:                                                              */ \
+         /*                                                                    */ \
+         /*    __quex_assert(*((BUFFER)->_read_p) == (QUEX_TYPE_LEXATOM)0);    */ \
+         /*                                                                    */ \
+         /* CANNOT hold, since by 'seeking' during backward lexing the read_p  */ \
+         /* might actually be loaded out and in again without setting zero.    */ \
+         (BUFFER)->_read_p[0]               = (BUFFER)->_lexatom_at_lexeme_start; \
+         (BUFFER)->_lexatom_at_lexeme_start = (QUEX_TYPE_LEXATOM)0;               \
+     }
+
+
+#endif /* QUEX_INCLUDE_GUARD__DEFINITIONS */

@@ -1,0 +1,65 @@
+/* -*- C++ -*- vim: set syntax=cpp: 
+ * (C) 2004-2009 Frank-Rene Schaefer                               */
+#ifndef QUEX_INCLUDE_GUARD__TOKEN__TOKEN_QUEUE
+#define QUEX_INCLUDE_GUARD__TOKEN__TOKEN_QUEUE
+
+$$INC: definitions$$
+$$INC: quex/asserts$$
+$$INC: quex/MemoryManager$$
+$$INCLUDE_TOKEN_CLASS_DEFINITION$$
+/* $$INCLUDE_LEXER_CLASS_DEFINITION$$ */
+
+QUEX_NAMESPACE_MAIN_OPEN
+
+typedef struct QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT {
+    QUEX_TYPE_ANALYZER* the_lexer;
+
+    QUEX_TYPE_TOKEN*   begin;
+    QUEX_TYPE_TOKEN*   read_iterator;    /* pointer to next token to be read          */
+    QUEX_TYPE_TOKEN*   write_iterator;   /* pointer to next token to be written       */
+    QUEX_TYPE_TOKEN*   end;
+
+} QUEX_NAME(TokenQueue);
+
+QUEX_INLINE void             QUEX_NAME(TokenQueue_reset)(QUEX_NAME(TokenQueue)* me);
+QUEX_INLINE void             QUEX_NAME(TokenQueue_init)(QUEX_NAME(TokenQueue)* me, 
+                                                        QUEX_TYPE_TOKEN*       Memory, 
+                                                        QUEX_TYPE_TOKEN*       MemoryEnd); 
+QUEX_INLINE bool             QUEX_NAME(TokenQueue_construct)(QUEX_NAME(TokenQueue)* me, 
+                                                             QUEX_TYPE_ANALYZER*    lexer,
+                                                             const size_t           N);
+QUEX_INLINE QUEX_TYPE_TOKEN* QUEX_NAME(TokenQueue_last_token)(QUEX_NAME(TokenQueue)* me);
+
+QUEX_INLINE void             QUEX_NAME(TokenQueue_resources_absent_mark)(QUEX_NAME(TokenQueue)* me);
+QUEX_INLINE bool             QUEX_NAME(TokenQueue_resources_absent)(QUEX_NAME(TokenQueue)* me);
+QUEX_INLINE void             QUEX_NAME(TokenQueue_destruct)(QUEX_NAME(TokenQueue)* me);
+QUEX_INLINE void             QUEX_NAME(TokenQueue_remainder_get)(QUEX_NAME(TokenQueue)* me,
+                                                                 QUEX_TYPE_TOKEN**      begin,
+                                                                 QUEX_TYPE_TOKEN**      end);
+QUEX_INLINE void             QUEX_NAME(TokenQueue_memory_get)(QUEX_NAME(TokenQueue)* me,
+                                                              QUEX_TYPE_TOKEN**      memory,
+                                                              size_t*                n);
+QUEX_INLINE bool             QUEX_NAME(TokenQueue_is_full)(QUEX_NAME(TokenQueue)* me);
+QUEX_INLINE bool             QUEX_NAME(TokenQueue_is_empty)(QUEX_NAME(TokenQueue)* me);
+QUEX_INLINE void             QUEX_NAME(TokenQueue_push)(QUEX_NAME(TokenQueue)* me,
+                                                        QUEX_TYPE_TOKEN_ID     Id);
+QUEX_INLINE void             QUEX_NAME(TokenQueue_push_text)(QUEX_NAME(TokenQueue)* me,
+                                                             QUEX_TYPE_TOKEN_ID     Id,
+                                                             QUEX_TYPE_LEXATOM*     BeginP,
+                                                             QUEX_TYPE_LEXATOM*     EndP);
+QUEX_INLINE void             QUEX_NAME(TokenQueue_push_repeated)(QUEX_NAME(TokenQueue)* me,
+                                                                 QUEX_TYPE_TOKEN_ID     Id,
+                                                                 size_t                 RepetitionN);
+QUEX_INLINE QUEX_TYPE_TOKEN* QUEX_NAME(TokenQueue_pop)(QUEX_NAME(TokenQueue)* me);
+QUEX_INLINE QUEX_TYPE_TOKEN* QUEX_NAME(TokenQueue_begin)(QUEX_NAME(TokenQueue)* me);
+QUEX_INLINE QUEX_TYPE_TOKEN* QUEX_NAME(TokenQueue_back)(QUEX_NAME(TokenQueue)* me);
+QUEX_INLINE size_t           QUEX_NAME(TokenQueue_available_n)(QUEX_NAME(TokenQueue)* me); 
+QUEX_INLINE void             QUEX_NAME(TokenQueue_set_token_TERMINATION)(QUEX_NAME(TokenQueue)* me);
+
+
+QUEX_INLINE bool             QUEX_NAME(TokenQueue_assert_before_sending)(QUEX_NAME(TokenQueue)* me);
+QUEX_INLINE bool             QUEX_NAME(TokenQueue_assert_after_sending)(QUEX_NAME(TokenQueue)* me);
+
+QUEX_NAMESPACE_MAIN_CLOSE
+
+#endif /* QUEX_INCLUDE_GUARD__TOKEN__TOKEN_QUEUE */

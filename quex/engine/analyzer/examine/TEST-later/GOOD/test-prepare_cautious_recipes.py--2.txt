@@ -1,0 +1,222 @@
+________________________________________________________________________________
+(1) No op(i)
+
+Mouth States:
+Acceptance Schemes:
+##  --
+##      RESTORE_ACCEPTANCE
+##
+##  --
+##      0
+##
+##Input Pointer Offset Schemes:
+##                           0         1         
+##   CONTEXT_FREE_MATCH: <reload>,       -1, 
+##   10:                 <reload>,       -2, 
+##   11:                 <reload>,       -3, 
+##   12:                 <reload>, <reload>, 
+##   13:                 <reload>, <reload>, 
+##   21:                 <reload>,       -1, 
+##   22:                 <reload>, <reload>, 
+##   4711:               <reload>, <reload>, 
+
+##Snapshot Map Schemes:
+##                                               0         1         
+##   AcceptanceRegister:                        SIGMA,           
+##   (PositionRegister, CONTEXT_FREE_MATCH):    SIGMA,           
+##   (PositionRegister, 10L):                   SIGMA,           
+##   (PositionRegister, 11L):                   SIGMA,           
+##   (PositionRegister, 12L):                   SIGMA,        0, 
+##   (PositionRegister, 13L):                   SIGMA,        0, 
+##   (PositionRegister, 21L):                   SIGMA,           
+##   (PositionRegister, 22L):                   SIGMA,           
+##   (PositionRegister, 4711L):                 SIGMA,           
+
+Output Recipe:
+  1111     Accepter:
+           RESTORE_ACCEPTANCE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] restore!
+           [10L] restore!
+           [11L] restore!
+           [12L] restore!
+           [13L] restore!
+           [21L] restore!
+           [22L] restore!
+           [4711L] restore!
+         Snapshot Map:
+           AcceptanceRegister                    @1111
+           (PositionRegister, CONTEXT_FREE_MATCH)@1111
+           (PositionRegister, 10L)               @1111
+           (PositionRegister, 11L)               @1111
+           (PositionRegister, 12L)               @1111
+           (PositionRegister, 13L)               @1111
+           (PositionRegister, 21L)               @1111
+           (PositionRegister, 22L)               @1111
+           (PositionRegister, 4711L)             @1111
+     
+--------------------------------------------------------------------
+________________________________________________________________________________
+(2) op(i) = Accept without pre-context
+
+Mouth States:
+##Common Acceptance Scheme:
+##      4711
+##
+##Input Pointer Offset Schemes:
+##                           0         1         
+##   CONTEXT_FREE_MATCH:        0,        0, 
+##   10:                 <reload>,       -2, 
+##   11:                 <reload>,       -3, 
+##   12:                 <reload>, <reload>, 
+##   13:                 <reload>, <reload>, 
+##   21:                 <reload>,       -1, 
+##   22:                 <reload>, <reload>, 
+##   4711:               <reload>, <reload>, 
+
+##Snapshot Map Schemes:
+##                                  0         1         
+##   (PositionRegister, 10L):      SIGMA,           
+##   (PositionRegister, 11L):      SIGMA,           
+##   (PositionRegister, 12L):      SIGMA,        0, 
+##   (PositionRegister, 13L):      SIGMA,        0, 
+##   (PositionRegister, 21L):      SIGMA,           
+##   (PositionRegister, 22L):      SIGMA,           
+##   (PositionRegister, 4711L):    SIGMA,           
+
+Output Recipe:
+  1111     Accepter:
+           4711
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: 0
+           [10L] restore!
+           [11L] restore!
+           [12L] restore!
+           [13L] restore!
+           [21L] restore!
+           [22L] restore!
+           [4711L] restore!
+         Snapshot Map:
+           (PositionRegister, 10L)               @1111
+           (PositionRegister, 11L)               @1111
+           (PositionRegister, 12L)               @1111
+           (PositionRegister, 13L)               @1111
+           (PositionRegister, 21L)               @1111
+           (PositionRegister, 22L)               @1111
+           (PositionRegister, 4711L)             @1111
+     
+--------------------------------------------------------------------
+________________________________________________________________________________
+(3) op(i) = StoreInputPosition
+
+Mouth States:
+Acceptance Schemes:
+##  --
+##      RESTORE_ACCEPTANCE
+##
+##  --
+##      0
+##
+##Input Pointer Offset Schemes:
+##                           0         1         
+##   CONTEXT_FREE_MATCH: <reload>,       -1, 
+##   10:                 <reload>,       -2, 
+##   11:                 <reload>,       -3, 
+##   12:                 <reload>, <reload>, 
+##   13:                 <reload>, <reload>, 
+##   21:                 <reload>,       -1, 
+##   22:                 <reload>, <reload>, 
+##   4711:                      0,        0, 
+
+##Snapshot Map Schemes:
+##                                               0         1         
+##   AcceptanceRegister:                        SIGMA,           
+##   (PositionRegister, CONTEXT_FREE_MATCH):    SIGMA,           
+##   (PositionRegister, 10L):                   SIGMA,           
+##   (PositionRegister, 11L):                   SIGMA,           
+##   (PositionRegister, 12L):                   SIGMA,        0, 
+##   (PositionRegister, 13L):                   SIGMA,        0, 
+##   (PositionRegister, 21L):                   SIGMA,           
+##   (PositionRegister, 22L):                   SIGMA,           
+
+Output Recipe:
+  1111     Accepter:
+           RESTORE_ACCEPTANCE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] restore!
+           [10L] restore!
+           [11L] restore!
+           [12L] restore!
+           [13L] restore!
+           [21L] restore!
+           [22L] restore!
+           [4711] offset: 0
+         Snapshot Map:
+           AcceptanceRegister                    @1111
+           (PositionRegister, CONTEXT_FREE_MATCH)@1111
+           (PositionRegister, 10L)               @1111
+           (PositionRegister, 11L)               @1111
+           (PositionRegister, 12L)               @1111
+           (PositionRegister, 13L)               @1111
+           (PositionRegister, 21L)               @1111
+           (PositionRegister, 22L)               @1111
+     
+--------------------------------------------------------------------
+________________________________________________________________________________
+(4) Accept with pre-context
+
+Mouth States:
+Acceptance Schemes:
+##  --
+##      pre33 => 4711
+##      RESTORE_ACCEPTANCE
+##
+##  --
+##      pre33 => 4711
+##      0
+##
+##Input Pointer Offset Schemes:
+##                           0         1         
+##   CONTEXT_FREE_MATCH: <reload>,       -1, 
+##   10:                 <reload>,       -2, 
+##   11:                 <reload>,       -3, 
+##   12:                 <reload>, <reload>, 
+##   13:                 <reload>, <reload>, 
+##   21:                 <reload>,       -1, 
+##   22:                 <reload>, <reload>, 
+##   4711:                      0,        0, 
+
+##Snapshot Map Schemes:
+##                                               0         1         
+##   AcceptanceRegister:                        SIGMA,           
+##   (PositionRegister, CONTEXT_FREE_MATCH):    SIGMA,           
+##   (PositionRegister, 10L):                   SIGMA,           
+##   (PositionRegister, 11L):                   SIGMA,           
+##   (PositionRegister, 12L):                   SIGMA,        0, 
+##   (PositionRegister, 13L):                   SIGMA,        0, 
+##   (PositionRegister, 21L):                   SIGMA,           
+##   (PositionRegister, 22L):                   SIGMA,           
+
+Output Recipe:
+  1111     Accepter:
+           RESTORE_ACCEPTANCE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] restore!
+           [10L] restore!
+           [11L] restore!
+           [12L] restore!
+           [13L] restore!
+           [21L] restore!
+           [22L] restore!
+           [4711] offset: 0
+         Snapshot Map:
+           AcceptanceRegister                    @1111
+           (PositionRegister, CONTEXT_FREE_MATCH)@1111
+           (PositionRegister, 10L)               @1111
+           (PositionRegister, 11L)               @1111
+           (PositionRegister, 12L)               @1111
+           (PositionRegister, 13L)               @1111
+           (PositionRegister, 21L)               @1111
+           (PositionRegister, 22L)               @1111
+     
+--------------------------------------------------------------------

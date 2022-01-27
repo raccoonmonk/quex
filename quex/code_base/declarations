@@ -1,0 +1,48 @@
+/* -*- C++ -*-   vim: set syntax=cpp:
+ * (C) Frank-Rene Schaefer
+ * ABSOLUTELY NO WARRANTY                      */
+#ifndef QUEX_INCLUDE_GUARD__DECLARATIONS
+#define QUEX_INCLUDE_GUARD__DECLARATIONS
+
+/* NOT: "$$INC: lexeme$$"
+ *
+ * Lexemes 'live' in the namespace of the token class. The token class 
+ * determines when the converters and helpers need to be included.            */
+
+$$INC: analyzer/asserts$$
+
+$$INC: definitions$$
+
+QUEX_NAMESPACE_MAIN_OPEN
+extern QUEX_TYPE_LEXATOM QUEX_NAME(LexemeNull);
+QUEX_NAMESPACE_MAIN_CLOSE
+
+$$INC: <unit-test> quex/StrangeStream$$
+
+$$INCLUDE_TOKEN_CLASS_DEFINITION$$
+$$INC: token/TokenQueue$$
+$$INC: token/receiving$$
+
+$$INC: analyzer/member/misc$$
+$$INC: analyzer/member/navigation$$
+$$INC: analyzer/member/mode-handling$$
+
+$$INC: analyzer/struct/constructor$$
+$$INC: analyzer/struct/include-stack$$
+$$INC: analyzer/struct/reset$$
+
+$$INC: buffer/Buffer$$
+$$INC: buffer/lexatoms/LexatomLoader$$
+
+$$INC: analyzer/Mode$$
+
+$$INC: <count> analyzer/Counter$$
+$$INC: lexeme/basics$$
+
+$$INC: quex/MemoryManager$$
+$$INC:                  quex/byte_loader/ByteLoader$$
+$$INC: <std-lib>        quex/byte_loader/ByteLoader_FILE$$
+$$INC: <std-lib && Cpp> quex/byte_loader/ByteLoader_stream$$
+
+
+#endif /* QUEX_INCLUDE_GUARD__DECLARATIONS */

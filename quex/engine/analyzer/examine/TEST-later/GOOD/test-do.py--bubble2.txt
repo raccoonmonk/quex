@@ -1,0 +1,183 @@
+
+                .------>(1)
+               /       /   \ 
+             (0)       |   |
+               \       \   /
+                '------>(2)
+    
+(0) Store InputP 100
+(1) Store InputP 11111
+(1) Accept 111/11
+(2) Accept 222/22
+(3) Accept 33
+(4) Accept 44
+
+All states present in 'sm' are either linear states or mouth states?  True
+There are no undetermined mouth states?  True
+There are no undetermined entry recipes into mouth states?  True
+Linear States:  [0L]
+Mouth States:  [1L, 2L, 3L, 4L]
+
+
+Linear States:
+  00     Accepter:
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: 0
+           [100] offset: 0
+     
+Mouth States:
+[1]
+Acceptance Schemes:
+  -- from: 0
+      pre111 => 11
+      MATCH_FAILURE
+
+  -- from: 2
+      pre111 => 11
+      RESTORE_ACCEPTANCE
+
+Input Pointer Offset Schemes:
+                           0         2         
+   CONTEXT_FREE_MATCH:       -1,  RESTORE, 
+   11:                        0,        0, 
+   22:                 <irrelv>,       -1, 
+   100:                      -1,  RESTORE, 
+   11111:                     0,        0, 
+
+Snapshot Map Schemes:
+                                               0         2         
+   AcceptanceRegister:                                      2, 
+   (PositionRegister, CONTEXT_FREE_MATCH):                  2, 
+   (PositionRegister, 100L):                                2, 
+
+Output Recipe:
+      Accepter:
+           RESTORE_ACCEPTANCE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: RESTORE
+           [11] offset: 0
+           [22] offset: -1
+           [100] offset: RESTORE
+           [11111] offset: 0
+         Snapshot Map:
+           AcceptanceRegister                    @1
+           (PositionRegister, CONTEXT_FREE_MATCH)@1
+           (PositionRegister, 100L)              @1
+     
+--------------------------------------------------------------------
+[2]
+Acceptance Schemes:
+  -- from: 0
+      pre222 => 22
+      MATCH_FAILURE
+
+  -- from: 1
+      pre222 => 22
+      RESTORE_ACCEPTANCE
+
+Input Pointer Offset Schemes:
+                           0         1         
+   CONTEXT_FREE_MATCH:       -1,  RESTORE, 
+   11:                 <irrelv>,       -1, 
+   22:                        0,        0, 
+   100:                      -1,  RESTORE, 
+   11111:              <irrelv>,       -1, 
+
+Snapshot Map Schemes:
+                                               0         1         
+   AcceptanceRegister:                                      1, 
+   (PositionRegister, CONTEXT_FREE_MATCH):                  1, 
+   (PositionRegister, 100L):                                1, 
+
+Output Recipe:
+      Accepter:
+           RESTORE_ACCEPTANCE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: RESTORE
+           [11] offset: -1
+           [22] offset: 0
+           [100] offset: RESTORE
+           [11111] offset: -1
+         Snapshot Map:
+           AcceptanceRegister                    @2
+           (PositionRegister, CONTEXT_FREE_MATCH)@2
+           (PositionRegister, 100L)              @2
+     
+--------------------------------------------------------------------
+[3]
+Common Acceptance Scheme:
+      33
+
+Input Pointer Offset Schemes:
+                           1         4         
+   CONTEXT_FREE_MATCH:        0,        0, 
+   11:                       -1,
+   22:                  RESTORE,
+   100:                 RESTORE,
+   11111:                    -1,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

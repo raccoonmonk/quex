@@ -1,0 +1,85 @@
+Mouth States:
+[1]
+Acceptance Schemes:
+##  -- from: 0
+##      RESTORE_ACCEPTANCE
+##
+##  -- from: 1
+##      8888
+##
+##Input Pointer Offset Schemes:
+
+##Snapshot Map Schemes:
+
+Output Recipe:
+      Accepter:
+           RESTORE_ACCEPTANCE
+         InputOffsetDb:
+         Snapshot Map:
+           AcceptanceRegister@1
+     
+--------------------------------------------------------------------
+[2]
+Acceptance Schemes:
+##  -- from: 0
+##      1111
+##
+##  -- from: 1
+##      8888
+##
+##Input Pointer Offset Schemes:
+
+##Snapshot Map Schemes:
+
+Output Recipe:
+      Accepter:
+           RESTORE_ACCEPTANCE
+         InputOffsetDb:
+         Snapshot Map:
+           AcceptanceRegister@2
+     
+--------------------------------------------------------------------
+[3]
+Acceptance Schemes:
+##  -- from: 0
+##      pre22 => 2222
+##
+##  -- from: 1
+##      8888
+##
+##Input Pointer Offset Schemes:
+
+##Snapshot Map Schemes:
+
+Output Recipe:
+      Accepter:
+           RESTORE_ACCEPTANCE
+         InputOffsetDb:
+         Snapshot Map:
+           AcceptanceRegister@3
+     
+--------------------------------------------------------------------
+[4]
+Acceptance Schemes:
+##  -- from: 0
+##      pre33 => 3333
+##      pre44 => 4444
+##      5555
+##
+##  -- from: 1
+##      pre33 => 3333
+##      pre44 => 4444
+##      8888
+##
+##Input Pointer Offset Schemes:
+
+##Snapshot Map Schemes:
+
+Output Recipe:
+      Accepter:
+           RESTORE_ACCEPTANCE
+         InputOffsetDb:
+         Snapshot Map:
+           AcceptanceRegister@4
+     
+--------------------------------------------------------------------

@@ -1,0 +1,37 @@
+/* -*- C++ -*-   vim: set syntax=cpp: 
+ * (C) 2004-2017 Frank-Rene Schaefer
+ * ABSOLUTELY NO WARRANTY
+ */
+#ifndef QUEX_TOKEN_INCLUDE_GUARD__TOKEN__GENERATED
+#define QUEX_TOKEN_INCLUDE_GUARD__TOKEN__GENERATED
+
+/* For '--token-class-only' the following option may not come directly
+ * from the configuration file.                                        */
+$$HEADER$$
+
+$$HELPER_DEFINITIONS$$
+
+struct $$TOKEN_CLASS$$_tag;
+
+QUEX_INLINE void     QUEX_NAME_TOKEN(construct)(struct $$TOKEN_CLASS$$_tag*);
+QUEX_INLINE void     QUEX_NAME_TOKEN(copy)(struct $$TOKEN_CLASS$$_tag*, 
+                                           const struct $$TOKEN_CLASS$$_tag*);
+QUEX_INLINE void     QUEX_NAME_TOKEN(destruct)(struct $$TOKEN_CLASS$$_tag*);
+
+$$<token-take-text>------------------------------------------------------------
+QUEX_INLINE void     QUEX_NAME_TOKEN(take_text)(struct $$TOKEN_CLASS$$_tag* me, 
+                                                const QUEX_TYPE_LEXATOM*    Begin, 
+                                                const QUEX_TYPE_LEXATOM*    End);
+$$-----------------------------------------------------------------------------
+
+typedef struct QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT $$TOKEN_CLASS$$_tag {
+    QUEX_TYPE_TOKEN_ID                               id;
+    $$<token-stamp-line>   QUEX_TYPE_TOKEN_LINE_N    line_n;$$
+    $$<token-stamp-column> QUEX_TYPE_TOKEN_COLUMN_N  column_n;$$
+$$DISTINCT_MEMBERS$$
+$$UNION_MEMBERS$$
+$$BODY$$
+} $$TOKEN_CLASS$$;
+
+
+#endif /* QUEX_INCLUDE_GUARD__TOKEN__GENERATED */

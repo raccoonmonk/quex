@@ -1,0 +1,61 @@
+/* -*- C++ -*-   vim: set syntax=cpp:
+ *
+ * (C) 2005-2017 Frank-Rene Schaefer
+ * ABSOLUTELY NO WARRANTY                                                     */
+#ifndef QUEX_INCLUDE_GUARD__ANALYZER__CONFIGURATION
+#define QUEX_INCLUDE_GUARD__ANALYZER__CONFIGURATION
+
+/*______________________________________________________________________________
+ * TYPE DEFINITIONS                                                 -- ADAPTABLE
+ *                                                                            */
+$$TYPE_DEFINITIONS$$
+
+/*______________________________________________________________________________
+ * CONFIGURATION PARAMETERS (I)                                     -- ADAPTABLE 
+ *                                                                            */
+$$ADAPTABLE$$
+
+/*______________________________________________________________________________
+ * CONFIGURATION PARAMETERS (II)                                    -- IMMUTABLE 
+ *                                                                            */
+$$IMMUTABLE$$
+
+/*______________________________________________________________________________
+ * DERIVED SETTINGS                                                 -- IMMUTABLE
+ *                                                                            */
+$$ERROR_IF_NO_CONFIGURATION_BY_MACRO$$
+
+/* Asserts are enabled by default. The lexer emits a warning message and tells
+ * how to deactivate them. Asserts can be DEACTIVATED as follows.
+ *
+ *  'NDEBUG' (from Standard 'assert.h') => avoid surprises.
+ *  'QUEX_OPTION_ASSERTS_DISABLED_EXT'  => solely prevent Quex's asserts.     
+ *                                                                            */
+#if defined(NDEBUG) 
+#   ifdef     QUEX_OPTION_ASSERTS
+#      warning "undef 'QUEX_OPTION_ASSERTS' by 'NDEBUG'"
+#      undef  QUEX_OPTION_ASSERTS
+#   endif
+#elif defined(QUEX_OPTION_ASSERTS_DISABLED_EXT)
+#   ifdef     QUEX_OPTION_ASSERTS
+#      warning "undef 'QUEX_OPTION_ASSERTS' by 'QUEX_OPTION_ASSERTS_DISABLED_EXT'"
+#      undef  QUEX_OPTION_ASSERTS
+#   endif
+#elif ! defined(QUEX_OPTION_ASSERTS)
+#   define QUEX_OPTION_ASSERTS
+#endif
+
+/* Special Case MinGW: At the time of this writing (2009y09m23d) it does 
+ * not support 'wchart_t'.                                                    */
+#if (defined (__GLIBCPP__) || defined(__GLIBCXX__)) && ! defined  (_GLIBCXX_USE_WCHAR_T)
+#   define  QUEX_OPTION_WCHAR_T_DISABLED_EXT
+#endif
+
+/* No external definition of QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT
+ * => define as empty.                                                        */
+#ifndef   QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT
+#  define QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT
+#endif
+
+#define QUEX_INDICATE_CONFIGURATION_FILE_PASSED
+#endif /* QUEX_INCLUDE_GUARD__ANALYZER__CONFIGURATION */

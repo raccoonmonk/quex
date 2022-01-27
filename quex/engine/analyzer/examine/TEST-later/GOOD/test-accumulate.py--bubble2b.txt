@@ -1,0 +1,59 @@
+
+                .------>(1)------>(3)
+               /       /         /   \ 
+             (0)      \/        \/   /\ 
+               \       \         \   /
+                '------>(2)------>(4)
+    
+Mouths ready for interference:
+   [2L]
+
+Linear States:
+  00     Accepter:
+           pre33 => 4711
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: 0
+           [4711] offset: 0
+     
+  01     Accepter:
+           pre33 => 4711
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -1
+           [4711] offset: -1
+     
+Mouth States:
+  02 <void>
+  from 0:
+    Accepter:
+      pre33 => 4711
+      MATCH_FAILURE
+    InputOffsetDb:
+      [CONTEXT_FREE_MATCH] offset: -1
+      [4711] offset: -1
+
+  from 1:
+    Accepter:
+      pre33 => 4711
+      MATCH_FAILURE
+    InputOffsetDb:
+      [CONTEXT_FREE_MATCH] offset: -2
+      [4711] offset: -2
+
+  03 <void>
+  from 1:
+    Accepter:
+      pre33 => 4711
+      MATCH_FAILURE
+    InputOffsetDb:
+      [CONTEXT_FREE_MATCH] offset: -2
+      [4711] offset: -2
+
+  from 4:
+None
+  04 <void>
+  from 2:
+None
+  from 3:
+None

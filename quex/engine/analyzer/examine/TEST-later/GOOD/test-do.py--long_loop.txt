@@ -1,0 +1,31 @@
+
+                 .--------->(5)---->-----.
+                 |                       |
+                (0)---->(1)---->(2)---->(6)
+                 |               |
+                 '--<---(4)-----(3)
+    
+(0) Accept MATCH_FAILURE
+Linear States:
+  01     Accepter:     restore!
+         InputOffsetDb:
+     
+  02     Accepter:     restore!
+         InputOffsetDb:
+     
+  03     Accepter:     restore!
+         InputOffsetDb:
+     
+  04     Accepter:     restore!
+         InputOffsetDb:
+     
+  05     Accepter:     restore!
+         InputOffsetDb:
+     
+Mouth States (Resolved):
+  00     Accepter:     restore!
+         InputOffsetDb:
+     
+  06     Accepter:     restore!
+         InputOffsetDb:
+     

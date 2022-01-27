@@ -1,0 +1,79 @@
+/* vim:set ft=c:
+ * (C) Frank-Rene Schaefer */
+#ifndef  QUEX_INCLUDE_GUARD__ANALYZER__MEMBER__NAME_OBJECT
+#define  QUEX_INCLUDE_GUARD__ANALYZER__MEMBER__NAME_OBJECT
+
+typedef struct QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT {
+    long     hash;
+    size_t   size;
+    uint8_t* content;
+} NameObject;
+
+QUEX_INLINE NameObject*
+QUEX_NAME(NameObject_new)(const void* Name, 
+                          const void* NameEnd /* = 0 */)
+/* If NameEnd == 0, then Name is considered QUEX_TYPE_LEXATOM based
+ * and zero terminated.                                                      */
+{
+    NameObject*                result;
+    const uint8_t*             begin_p = (const uint8_t*)Name;
+    const uint8_t*             end_p;
+    const uint8_t*             p;
+    const QUEX_TYPE_LEXATOM* qtc_p;
+    size_t                     size;
+    long                       hash = QUEX_HASH_INIT_VALUE;
+    uint8_t*                   memory;
+
+    if( ! NameEnd ) {
+        qtc_p = (QUEX_TYPE_LEXATOM*)Name;
+        while( *qtc_p ) { 
+            hash = QUEX_HASH_NEXT(hash, *qtc_p);
+           ++qtc_p; 
+        }
+        end_p = (const uint8_t*)qtc_p;
+    } 
+    else {
+        end_p = (const uint8_t*)NameEnd;
+        while( p != end_p ) {
+            hash = QUEX_HASH_NEXT(hash, *p);
+            ++p;
+        }
+    }
+    __quex_assert(end_p >= begin_p);
+    size = (size_t)(end_p - begin_p);
+
+    /* sizeof(NameObject) determines required memory of alligned data
+     * structure, so that is is safe to add simply the size of the allocated
+     * name to it.                                                           */
+    memory = (uint8_t*)QUEX_GNAME_LIB(MemoryManager_allocate)(sizeof(NameObject) + size,
+                                                      E_MemoryObjectType_INPUT_NAME_OBJECT);
+    if( ! memory ) {
+        return (NameObject*)0;
+    }
+
+    result = (NameObject*)memory;
+    result->hash    = hash;
+    result->size    = size;
+    result->content = (uint8_t*)&memory[sizeof(NameObject)];
+    QUEX_GSTD(memcpy)(result->content, (const void*)begin_p, size);
+
+    return result;
+}
+
+QUEX_INLINE bool
+QUEX_NAME(NameObject_is_equal)(const NameObject* A, const NameObject* B)
+{
+    if     ( A->hash != B->hash ) return false;
+    else if( A->size != B->size ) return false;
+    else                          return QUEX_GSTD(memcmp)(A->content, B->content, A->size);
+}
+
+QUEX_INLINE void
+QUEX_NAME(NameObject_delete)(NameObject** me)
+{
+    if( ! *me ) return; 
+    QUEX_GNAME_LIB(MemoryManager_free)((void*)*me, E_MemoryObjectType_INPUT_NAME_OBJECT);
+    *me = (NameObject*)0;
+}
+
+#endif /*  QUEX_INCLUDE_GUARD__ANALYZER__MEMBER__NAME_OBJECT */

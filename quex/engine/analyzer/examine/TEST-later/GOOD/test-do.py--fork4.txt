@@ -1,0 +1,84 @@
+           
+                  .->--(1)-->--(2)-->--.
+                 /                      \  
+               (0)---->(3)---->(4)-->---(7)
+                 \                      /
+                  '->--(5)-->--(6)-->--'
+    
+(0) Accept MATCH_FAILURE
+(1) Store InputP 77
+(1) Accept 111/1
+(3) Accept 333/33
+(4) Accept 44
+(6) Accept 666/66
+(7) Accept 77R
+
+Unresolved Mouth States:
+   []
+
+Linear States:
+  00     Accepter:
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: 0
+     
+  01     Accepter:
+           pre111 => 1
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -1
+           [1] offset: 0
+           [77] offset: 0
+     
+  02     Accepter:
+           pre111 => 1
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -2
+           [1] offset: -1
+           [77] offset: -1
+     
+  03     Accepter:
+           pre333 => 33
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -1
+           [33] offset: 0
+     
+  04     Accepter:
+           44
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: 0
+           [33] offset: -1
+     
+  05     Accepter:
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -1
+     
+  06     Accepter:
+           pre666 => 66
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: -2
+           [66] offset: 0
+     
+Mouth States (Resolved):
+  07     Accepter:
+           77
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] restore!
+           [1L] restore!
+           [33L] restore!
+           [66L] restore!
+           [77L] restore!
+         Snapshot Map:
+           (PositionRegister, CONTEXT_FREE_MATCH)@7
+           (PositionRegister, 1L)                @7
+           (PositionRegister, 33L)               @7
+           (PositionRegister, 66L)               @7
+           (PositionRegister, 77L)               @7
+     
+Mouth States (Unresolved):
+
+Horizon: []

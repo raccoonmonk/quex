@@ -1,0 +1,46 @@
+/* -*- C++ -*- vim: set syntax=cpp:
+ *
+ * Important:
+ *                  RESET != DESTRUCTOR + CONSTRUCTOR
+ *
+ * because DESTRUCTOR and CONSTRUCTOR may involve resource de-allocation and
+ * resource re-allocation. Reset, instead may work on existing resources.
+ *
+ * (C) 2005-2017 Frank-Rene Schaefer
+ *
+ * ABSOLUTELY NO WARRANTY                                                    */
+#ifndef QUEX_INCLUDE_GUARD__ANALYZER__STRUCT__RESET
+#define QUEX_INCLUDE_GUARD__ANALYZER__STRUCT__RESET
+
+$$INC: definitions$$
+
+QUEX_NAMESPACE_MAIN_OPEN 
+
+/* The constructor 'core' function is implemented per analyzer.
+ * It's implementation happens inside the generated source file.             */
+
+QUEX_INLINE bool QUEX_NAME(MF_reset)(QUEX_TYPE_ANALYZER* me);
+
+$$<std-lib>--------------------------------------------------------------------
+QUEX_INLINE bool QUEX_NAME(MF_reset_file_name)(QUEX_TYPE_ANALYZER*   me,
+                                               const char*           Filename, 
+                                               QUEX_GNAME_LIB(Converter)* converter);
+$$-----------------------------------------------------------------------------
+
+QUEX_INLINE bool QUEX_NAME(MF_reset_ByteLoader)(QUEX_TYPE_ANALYZER*    me,
+                                                QUEX_GNAME_LIB(ByteLoader)* byte_loader,
+                                                QUEX_GNAME_LIB(Converter)*  converter);
+
+QUEX_INLINE bool QUEX_NAME(MF_reset_memory)(QUEX_TYPE_ANALYZER* me,
+                                            QUEX_TYPE_LEXATOM*  BufferMemoryBegin, 
+                                            size_t              BufferMemorySize,
+                                            QUEX_TYPE_LEXATOM*  BufferEndOfFileP); 
+
+/* Basic constructions ________________________________________________________
+ *                                                                           */
+QUEX_INLINE bool QUEX_NAME(MF_reset_all_but_buffer)(QUEX_TYPE_ANALYZER* me);
+extern      bool QUEX_NAME(user_reset)(QUEX_TYPE_ANALYZER* me);
+
+QUEX_NAMESPACE_MAIN_CLOSE
+
+#endif /* QUEX_INCLUDE_GUARD__ANALYZER__STRUCT__RESET */

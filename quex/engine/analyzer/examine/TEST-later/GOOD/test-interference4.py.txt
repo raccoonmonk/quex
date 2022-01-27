@@ -1,0 +1,81 @@
+Mouth States:
+[1]
+##Common Acceptance Scheme:
+##      0
+##
+##Input Pointer Offset Schemes:
+##          0         1         
+##   0: <irrelv>,       -1, 
+
+##Snapshot Map Schemes:
+
+Output Recipe:
+      Accepter:
+           0
+         InputOffsetDb:
+           [0] offset: -1
+     
+--------------------------------------------------------------------
+[2]
+##Common Acceptance Scheme:
+##      0
+##
+##Input Pointer Offset Schemes:
+##          0         1         
+##   0:       -1,      999, 
+
+##Snapshot Map Schemes:
+
+Output Recipe:
+      Accepter:
+           0
+         InputOffsetDb:
+           [0] offset: RESTORE
+         Snapshot Map:
+           (PositionRegister, 0)@2
+     
+--------------------------------------------------------------------
+[3]
+##Common Acceptance Scheme:
+##      0
+##
+##Input Pointer Offset Schemes:
+##          0         1         
+##   0:       -1,       -1, 
+##   1:       -2,      998, 
+
+##Snapshot Map Schemes:
+
+Output Recipe:
+      Accepter:
+           0
+         InputOffsetDb:
+           [0] offset: -1
+           [1] offset: RESTORE
+         Snapshot Map:
+           (PositionRegister, 1)@3
+     
+--------------------------------------------------------------------
+[4]
+##Common Acceptance Scheme:
+##      0
+##
+##Input Pointer Offset Schemes:
+##          0         1         
+##   0:       -1,       -1, 
+##   1:       -2,       -2, 
+##   2:       -3,      997, 
+
+##Snapshot Map Schemes:
+
+Output Recipe:
+      Accepter:
+           0
+         InputOffsetDb:
+           [0] offset: -1
+           [1] offset: -2
+           [2] offset: RESTORE
+         Snapshot Map:
+           (PositionRegister, 2)@4
+     
+--------------------------------------------------------------------

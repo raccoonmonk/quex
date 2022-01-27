@@ -1,0 +1,73 @@
+#ifndef QUEX_INCLUDE_GUARD__QUEX__STANDARD_FUNCTIONS
+#define QUEX_INCLUDE_GUARD__QUEX__STANDARD_FUNCTIONS
+
+#if defined(_MSC_VER) && _MSC_VER >= 1600
+    /* Microsoft VisualStudio(tm) 2010, i.e. Version 1600:
+     * Forget about the 'CRT security enhancements' for sprintf, fopen, and setbuf. */
+#   pragma warning(disable: 4996)
+#endif
+$$INC: quex/types.h$$
+
+$$<Cpp && std-lib>-------------------------------------------------------------
+#include <cstring>  
+#include <cstdio>   
+#include <cstdlib>
+#include <stdexcept>
+#include <new>
+$$-----------------------------------------------------------------------------
+$$<not-std-lib>----------------------------------------------------------------
+namespace std {
+/* Placement new (otherwise implemented in standard header '<new>')          */
+inline void* operator new (std::size_t size, void* address) { (void)size; return address;};
+}
+$$-----------------------------------------------------------------------------
+$$<Cpp && not-tiny-std-lib>------------------------------------------------------
+#define __QUEX_STD_STDIN    stdin
+#define __QUEX_STD_STDERR   stderr
+#define __QUEX_STD_STDOUT   stdout
+#define __QUEX_STD_FILE     std::FILE
+#define __QUEX_STD_fprintf  std::fprintf
+#define __QUEX_STD_sprintf  std::sprintf
+$$-----------------------------------------------------------------------------
+$$<C && std-lib>---------------------------------------------------------------
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+$$-----------------------------------------------------------------------------
+
+$$<C && not-tiny-std-lib>------------------------------------------------------
+#define __QUEX_STD_STDIN    stdin
+#define __QUEX_STD_STDERR   stderr
+#define __QUEX_STD_STDOUT   stdout
+#define __QUEX_STD_FILE     FILE
+#define __QUEX_STD_fprintf  fprintf
+#define __QUEX_STD_sprintf  sprintf
+$$-----------------------------------------------------------------------------
+
+#ifndef QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT 
+#define QUEX_<PURE>SETTING_USER_CLASS_DECLARATION_EPILOG_EXT 
+#endif
+
+#define __QUEX_STD_strlcpy  QUEX_GNAME_LIB(strlcpy)
+
+#ifndef    QUEX_SETTING_DEBUG_OUTPUT_CHANNEL
+#   define QUEX_SETTING_DEBUG_OUTPUT_CHANNEL __QUEX_STD_STDOUT
+#endif
+
+$$<std-lib && not-tiny-std-lib>--------------------------------------------------------------------
+#define QUEX_DEBUG_PRINT(STR)           __QUEX_STD_fprintf(QUEX_SETTING_DEBUG_OUTPUT_CHANNEL, "%s", (STR))
+#define QUEX_DEBUG_PRINT1(STR, X)       __QUEX_STD_fprintf(QUEX_SETTING_DEBUG_OUTPUT_CHANNEL, (STR), (X))
+#define QUEX_DEBUG_PRINT2(STR, X, Y)    __QUEX_STD_fprintf(QUEX_SETTING_DEBUG_OUTPUT_CHANNEL, (STR), (X), (Y))
+#define QUEX_DEBUG_PRINT3(STR, X, Y, Z) __QUEX_STD_fprintf(QUEX_SETTING_DEBUG_OUTPUT_CHANNEL, (STR), (X), (Y), (Z))
+$$-----------------------------------------------------------------------------
+
+$$<not-std-lib || tiny-std-lib>--------------------------------------------------------------------
+#define QUEX_DEBUG_PRINT(STR)           
+#define QUEX_DEBUG_PRINT1(STR, X)       
+#define QUEX_DEBUG_PRINT2(STR, X, Y)    
+#define QUEX_DEBUG_PRINT3(STR, X, Y, Z) 
+$$-----------------------------------------------------------------------------
+
+$$INC:<tiny-std-lib> quex/tiny_stdlib$$
+
+#endif /* QUEX_INCLUDE_GUARD__QUEX__STANDARD_FUNCTIONS */

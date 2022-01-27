@@ -1,0 +1,41 @@
+
+                 .--------->(5)---->-----.
+                 |                       |
+                (0)---->(1)---->(2)---->(6)
+                 |               |
+                 '--<---(4)-----(3)
+    
+(1) Store InputP 77
+(1) Accept 111/1
+(3) Accept 333/33
+(4) Accept 44
+(6) Accept 666/66
+
+Unresolved Mouth States:
+   [0L, 6L]
+
+Linear States:
+  01 <void>
+  02 <void>
+  03 <void>
+  04 <void>
+  05 <void>
+Mouth States (Resolved):
+Mouth States (Unresolved):
+
+ * 00
+
+  from BEFORE_ENTRY 
+         Accepter:
+           MATCH_FAILURE
+         InputOffsetDb:
+           [CONTEXT_FREE_MATCH] offset: 0
+     
+  from  4 <void>
+
+ * 06
+
+  from  2 <void>
+  from  5 <void>
+
+Horizon: [0L]

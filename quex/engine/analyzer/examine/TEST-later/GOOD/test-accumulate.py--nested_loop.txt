@@ -1,0 +1,32 @@
+           
+                .--<-------(5)---<------.
+                |                       |
+               (0)---->(1)---->(2)---->(3)---->(4)
+                        |       |   
+                        '---<---'
+    
+Mouths ready for interference:
+   []
+
+Linear States:
+  02 <void>
+  03 <void>
+  04 <void>
+  05 <void>
+Mouth States:
+  00 <void>
+  from 5:
+None
+  from BEFORE_ENTRY:
+    Accepter:
+      pre33 => 4711
+      MATCH_FAILURE
+    InputOffsetDb:
+      [CONTEXT_FREE_MATCH] offset: 0
+      [4711] offset: 0
+
+  01 <void>
+  from 0:
+None
+  from 2:
+None
