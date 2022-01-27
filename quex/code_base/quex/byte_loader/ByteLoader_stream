@@ -83,7 +83,7 @@ QUEX_NAME_LIB(ByteLoader_stream_new)(StreamT* sh, bool BinaryModeF /* = false */
         return (QUEX_GNAME_LIB(ByteLoader)*)0;
     }
     else {
-        me->ownership = E_Ownership_LEXER;
+        me->ownership = E_Ownership_EXTERNAL;
         return me;
     }
 }
@@ -176,7 +176,7 @@ QUEX_NAME_LIB(ByteLoader_stream_destruct)(QUEX_GNAME_LIB(ByteLoader)* alter_ego)
 {
     QUEX_GNAME_LIB(ByteLoader_stream)<StreamT>* me = (QUEX_GNAME_LIB(ByteLoader_stream)<StreamT>*)alter_ego;
 
-    if( me->input_handle ) {
+    if( me->ownership == E_Ownership_LEXER && me->input_handle ) {
         delete me->input_handle;
         me->input_handle = nullptr;
     }
