@@ -60,7 +60,7 @@ QUEX_NAME(lexeme_nnzt_to_pretty_char)(const QUEX_TYPE_LEXATOM**  source_pp,
 
 #if ! defined(QUEX_OPTION_WCHAR_T_DISABLED_EXT)
 extern void
-QUEX_NAME(lexeme_nnzt_to_wchar)(const QUEX_TYPE_LEXATOM**  source_pp, 
+QUEX_NAME(lexeme_nnzt_to_wchar_t)(const QUEX_TYPE_LEXATOM**  source_pp, 
                                 const QUEX_TYPE_LEXATOM*   SourceEnd, 
                                 wchar_t**                  drain_pp,  
                                 const wchar_t*             DrainEnd);
@@ -90,9 +90,9 @@ QUEX_NAME(lexeme_to_pretty_char)(const QUEX_TYPE_LEXATOM* SourceBegin,
 
 #if ! defined(QUEX_OPTION_WCHAR_T_DISABLED_EXT)
 extern wchar_t*
-QUEX_NAME(lexeme_to_wchar)(const QUEX_TYPE_LEXATOM* SourceBegin, 
-                           wchar_t*                 drain_p,  
-                           const wchar_t*           DrainEnd);
+QUEX_NAME(lexeme_to_wchar_t)(const QUEX_TYPE_LEXATOM* SourceBegin, 
+                             wchar_t*                 drain_p,  
+                             const wchar_t*           DrainEnd);
 #endif
 
 $$<Cpp && std-lib>--------------------------------------------------------------
@@ -108,7 +108,7 @@ extern std::basic_string<char>
 QUEX_NAME(lexeme_to_pretty_char)(const std::basic_string<QUEX_TYPE_LEXATOM>& Source);
 #if ! defined(QUEX_OPTION_WCHAR_T_DISABLED_EXT)
 extern std::basic_string<wchar_t>
-QUEX_NAME(lexeme_to_wchar)(const std::basic_string<QUEX_TYPE_LEXATOM>& Source);
+QUEX_NAME(lexeme_to_wchar_t)(const std::basic_string<QUEX_TYPE_LEXATOM>& Source);
 #endif
 $$-----------------------------------------------------------------------------
 
