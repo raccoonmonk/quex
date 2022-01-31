@@ -245,7 +245,7 @@ QUEX_NAME(Buffer_move_get_distance_forward_to_contain)(QUEX_NAME(Buffer)*       
                                                        QUEX_TYPE_STREAM_POSITION* lexatom_index_to_be_contained)
 {
     QUEX_TYPE_STREAM_POSITION lexatom_index_begin = me->input.lexatom_index_begin;
-    QUEX_TYPE_STREAM_POSITION lexatom_index_end   = lexatom_index_begin + me->content_size(me);
+    QUEX_TYPE_STREAM_POSITION lexatom_index_end   = lexatom_index_begin + QUEX_TYPE_STREAM_OFFSET(me->content_size(me));
     QUEX_TYPE_STREAM_POSITION new_lexatom_index_begin;
     const ptrdiff_t           FallBackN = me->_fallback_n;
     __quex_assert(FallBackN >= 0);
@@ -306,7 +306,7 @@ QUEX_NAME(Buffer_move_backup_lexatom_index_of_lexeme_start)(QUEX_NAME(Buffer)* m
         /* Lexeme start will be out of buffer. Store the position to be
          * reloaded when lexing forward restarts.                             */
         me->_backup_lexatom_index_of_lexeme_start_p =   QUEX_NAME(Buffer_tell)(me)
-                                                      + (me->_lexeme_start_p - me->_read_p);
+                                                      + QUEX_TYPE_STREAM_OFFSET(me->_lexeme_start_p - me->_read_p);
     }
 }
 

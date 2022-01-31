@@ -57,7 +57,7 @@ QUEX_NAME(Buffer_load_forward)(QUEX_NAME(Buffer)*  me,
         return E_LoadResult_ENCODING_ERROR;
     }
     else if( ! me->filler || ! me->filler->byte_loader ) {
-        QUEX_NAME(Buffer_register_eos)(me, me->input.lexatom_index_begin + me->content_size(me));
+        QUEX_NAME(Buffer_register_eos)(me, me->input.lexatom_index_begin + QUEX_TYPE_STREAM_OFFSET(me->content_size(me)));
         return E_LoadResult_NO_MORE_DATA;  /* No filler/loader => no load!   */
     }
 
@@ -133,7 +133,7 @@ QUEX_NAME(Buffer_load_forward_to_contain)(QUEX_NAME(Buffer)*        me,
                                           move_distance, &encoding_error_f, 
                                           &loaded_n);
 
-    lexatom_index_end = me->input.lexatom_index_begin + me->content_size(me);
+    lexatom_index_end = me->input.lexatom_index_begin + QUEX_TYPE_STREAM_OFFSET(me->content_size(me));
 
     if(    LexatomIndexToBeContained == me->input.lexatom_index_end_of_stream 
         && LexatomIndexToBeContained == lexatom_index_end ) {
@@ -314,14 +314,14 @@ QUEX_NAME(Buffer_move_and_load)(QUEX_NAME(Buffer)*  me,
     }
 
     load_lexatom_index  =   me->input.lexatom_index_begin 
-                          + (me->content_end(me) - me->content_begin(me));
+                          + QUEX_TYPE_STREAM_OFFSET(me->content_end(me) - me->content_begin(me));
 
     *loaded_n = me->filler->load(me->filler, me->content_end(me), 
                                  free_space, load_lexatom_index, 
                                  &end_of_stream_f, encoding_error_f);
 
     if( (! *loaded_n) || end_of_stream_f ) { /* End of stream detected.       */
-        me->input.lexatom_index_end_of_stream = load_lexatom_index + *loaded_n;
+        me->input.lexatom_index_end_of_stream = load_lexatom_index + QUEX_TYPE_STREAM_OFFSET(*loaded_n);
     }
 
     me->input.end_p    = &me->input.end_p[*loaded_n];

@@ -382,7 +382,7 @@ QUEX_NAME(Buffer_input_lexatom_index_end)(QUEX_NAME(Buffer)* me)
     __quex_assert(me->input.lexatom_index_begin >= 0);
     QUEX_NAME(Buffer_assert_pointers_in_range)(me);
 
-    return me->input.lexatom_index_begin + me->content_size(me);
+    return me->input.lexatom_index_begin + QUEX_TYPE_STREAM_OFFSET(me->content_size(me));
 }
 
 QUEX_INLINE bool 
