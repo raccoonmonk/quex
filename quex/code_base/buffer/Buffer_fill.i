@@ -126,7 +126,7 @@ QUEX_NAME(Buffer_fill_finish)(QUEX_NAME(Buffer)* me,
      *    known how many lexatoms have been inserted.
      *                                                                       */
     QUEX_NAME(Buffer_register_content)(me, &me->content_end(me)[inserted_lexatom_n], -1);
-    QUEX_NAME(Buffer_register_eos)(me, me->input.lexatom_index_begin + me->content_size(me));
+    QUEX_NAME(Buffer_register_eos)(me, me->input.lexatom_index_begin + QUEX_TYPE_STREAM_OFFSET(me->content_size(me)));
 
     QUEX_NAME(Buffer_assert_consistency)(me);
 }

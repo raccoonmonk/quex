@@ -122,9 +122,12 @@ typedef QUEXLIB_size_t      size_t;
 $$-----------------------------------------------------------------------------
 
 $$<   not-std-lib> typedef intmax_t       QUEX_TYPE_STREAM_POSITION;$$
+$$<   not-std-lib> typedef intmax_t       QUEX_TYPE_STREAM_OFFSET;$$
 $$<C   && std-lib> typedef long           QUEX_TYPE_STREAM_POSITION;$$
+$$<C   && std-lib> typedef long           QUEX_TYPE_STREAM_OFFSET;$$
 $$<Cpp && std-lib> #include <iostream>$$
 $$<Cpp && std-lib> typedef std::streampos QUEX_TYPE_STREAM_POSITION;$$
+$$<Cpp && std-lib> typedef std::streamoff QUEX_TYPE_STREAM_OFFSET;$$
 
 #endif /* QUEX_INCLUDE_GUARD__QUEX__TYPES_H                                   */
 
