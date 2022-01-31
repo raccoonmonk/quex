@@ -306,7 +306,7 @@ QUEX_NAME(Buffer_move_backup_lexatom_index_of_lexeme_start)(QUEX_NAME(Buffer)* m
         /* Lexeme start will be out of buffer. Store the position to be
          * reloaded when lexing forward restarts.                             */
         me->_backup_lexatom_index_of_lexeme_start_p =   QUEX_NAME(Buffer_tell)(me)
-                                                      + QUEX_TYPE_STREAM_OFFSET((me->_lexeme_start_p - me->_read_p));
+                                                      + QUEX_TYPE_STREAM_OFFSET(me->_lexeme_start_p - me->_read_p);
     }
 }
 

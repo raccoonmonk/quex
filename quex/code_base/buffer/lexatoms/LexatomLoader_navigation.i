@@ -150,7 +150,7 @@ QUEX_NAME(LexatomLoader_lexatom_index_reset_backup)(QUEX_NAME(LexatomLoader)* me
         }
     }
     else {
-        backup_byte_pos = BackupByteLoaderPosition - BackupStomachByteN;
+        backup_byte_pos = BackupByteLoaderPosition - QUEX_TYPE_STREAM_OFFSET(BackupStomachByteN);
         me->byte_loader->seek(me->byte_loader, backup_byte_pos);
         me->stomach_clear(me);
         me->lexatom_index_next_to_fill = Backup_lexatom_index_next_to_fill;
